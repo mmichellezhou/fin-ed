@@ -11,32 +11,37 @@ import LessonViewer from "./pages/LessonViewer";
 import QuizPage from "./pages/QuizPage";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
+import ProfileSetup from "./pages/ProfileSetup";
 import NotFound from "./pages/NotFound";
+import { UserProvider } from "./contexts/UserContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="min-h-screen">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/lesson-selector" element={<LessonSelector />} />
-            <Route path="/lessons" element={<LessonSelector />} />
-            <Route path="/lessons/:ageGroup" element={<LessonViewer />} />
-            <Route path="/quiz" element={<QuizPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <ChatbotWidget />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
+    <UserProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="min-h-screen">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/setup" element={<ProfileSetup />} />
+              <Route path="/lesson-selector" element={<LessonSelector />} />
+              <Route path="/lessons" element={<LessonSelector />} />
+              <Route path="/lessons/:ageGroup" element={<LessonViewer />} />
+              <Route path="/quiz" element={<QuizPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <ChatbotWidget />
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </UserProvider>
   </QueryClientProvider>
 );
 

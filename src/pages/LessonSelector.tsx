@@ -2,52 +2,91 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Users, Baby, GraduationCap, Briefcase, Heart, Pencil } from "lucide-react";
+import {
+  Users,
+  Baby,
+  GraduationCap,
+  Briefcase,
+  Heart,
+  Pencil,
+} from "lucide-react";
+import { useUser } from "@/contexts/UserContext";
 
 const ageGroups = [
   {
     id: "kids",
-    title: "Kids (6-12)",
+    title: "Kids (8-12)",
     description: "Fun basics: saving, spending smart, and counting coins!",
     icon: Baby,
-    color: "from-pink-400 to-purple-500"
+    color: "from-pink-400 to-purple-500",
+    lessons: 3,
+    available: true,
   },
   {
     id: "teens",
     title: "Teens (13-18)",
-    description: "First jobs, budgeting, and learning to manage money independently",
+    description:
+      "First jobs, budgeting, and learning to manage money independently",
     icon: Pencil,
-    color: "from-blue-400 to-cyan-500"
+    color: "from-blue-400 to-cyan-500",
+    lessons: 13,
+    available: true,
   },
   {
     id: "young-adults",
     title: "Young Adults (19-25)",
-    description: "Building credit, student loans, and making key financial decisions",
+    description:
+      "Building credit, student loans, and making key financial decisions",
     icon: GraduationCap,
-    color: "from-green-400 to-emerald-500"
+    color: "from-green-400 to-emerald-500",
+    lessons: 0,
+    available: false,
   },
   {
     id: "adults",
     title: "Adults (26+)",
-    description: "Investment strategies, homeownership, and retirement",
+    description:
+      "Investment strategies, homeownership, and retirement planning",
     icon: Briefcase,
-    color: "from-indigo-400 to-blue-500"
+    color: "from-indigo-400 to-blue-500",
+    lessons: 0,
+    available: false,
   },
   {
     id: "seniors",
     title: "Seniors (65+)",
     description: "Retirement planning, estate management, and healthcare costs",
     icon: Heart,
-    color: "from-orange-400 to-red-500"
-  }
+    color: "from-orange-400 to-red-500",
+    lessons: 0,
+    available: false,
+  },
 ];
 
 const LessonSelector = () => {
   const navigate = useNavigate();
+  const { userProfile, setUserProfile } = useUser();
   const [selectedAge, setSelectedAge] = useState<string | null>(null);
 
   const handleAgeSelect = (ageId: string) => {
+    const selectedGroup = ageGroups.find((group) => group.id === ageId);
+
+    if (!selectedGroup?.available) {
+      // Don't navigate for unavailable age groups
+      return;
+    }
+
     setSelectedAge(ageId);
+
+    // If user has a profile, update their current age group
+    if (userProfile) {
+      const updatedProfile = {
+        ...userProfile,
+        currentAgeGroup: ageId,
+      };
+      setUserProfile(updatedProfile);
+    }
+
     // Navigate to lesson viewer with selected age group
     navigate(`/lessons/${ageId}`);
   };
@@ -60,7 +99,8 @@ const LessonSelector = () => {
             Choose Your Learning Path
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Select your age group to get personalized financial lessons designed just for you
+            Select your age group to get personalized financial lessons designed
+            just for you
           </p>
         </div>
 
@@ -71,34 +111,44 @@ const LessonSelector = () => {
               <Card
                 key={group.id}
                 className={`card-age-group animate-fade-in cursor-pointer relative overflow-hidden group ${
-                  selectedAge === group.id ? 'ring-2 ring-primary' : ''
+                  selectedAge === group.id ? "ring-2 ring-primary" : ""
                 }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
                 onClick={() => handleAgeSelect(group.id)}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${group.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${group.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                />
+
                 <div className="relative z-10 p-8 text-center">
                   <div className="mb-4 flex justify-center">
                     <div className="p-4 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
                       <Icon className="w-8 h-8 text-primary" />
                     </div>
                   </div>
-                  
+
                   <h3 className="text-xl font-semibold text-foreground mb-3">
                     {group.title}
                   </h3>
-                  
+
                   <p className="text-muted-foreground mb-6 leading-relaxed">
                     {group.description}
                   </p>
-                  
-                  <Button
-                    variant="outline-hero"
-                    className="w-full group-hover:shadow-lg transition-all duration-300"
-                  >
-                    Start Learning
-                  </Button>
+
+                  {group.available ? (
+                    <Button
+                      variant="outline-hero"
+                      className="w-full group-hover:shadow-lg transition-all duration-300"
+                    >
+                      Start Learning
+                    </Button>
+                  ) : (
+                    <div className="w-full p-3 bg-muted/50 rounded-lg border border-dashed border-muted-foreground/30">
+                      <p className="text-sm text-muted-foreground font-medium">
+                        Coming Soon
+                      </p>
+                    </div>
+                  )}
                 </div>
               </Card>
             );
