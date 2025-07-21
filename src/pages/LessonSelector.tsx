@@ -33,14 +33,14 @@ const ageGroups = [
     available: true,
   },
   {
-    id: "young-adults",
+    id: "youngAdults",
     title: "Young Adults (19-25)",
     description:
       "Building credit, student loans, and making key financial decisions",
     icon: GraduationCap,
     color: "from-green-400 to-emerald-500",
-    lessons: 0,
-    available: false,
+    lessons: 5,
+    available: true,
   },
   {
     id: "adults",
@@ -49,8 +49,8 @@ const ageGroups = [
       "Investment strategies, homeownership, and retirement planning",
     icon: Briefcase,
     color: "from-indigo-400 to-blue-500",
-    lessons: 0,
-    available: false,
+    lessons: 5,
+    available: true,
   },
   {
     id: "seniors",
@@ -58,8 +58,8 @@ const ageGroups = [
     description: "Retirement planning, estate management, and healthcare costs",
     icon: Heart,
     color: "from-orange-400 to-red-500",
-    lessons: 0,
-    available: false,
+    lessons: 5,
+    available: true,
   },
 ];
 

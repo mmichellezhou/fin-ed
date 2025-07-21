@@ -32,33 +32,84 @@ const lessonsData = {
       title: "What is Money?",
       category: "basics",
       description:
-        "Learn about coins, bills, and what money is used for in simple terms.",
+        "Explains what money is, where it comes from, and how it’s used.",
       image: "💰",
-      completed: true,
+      completed: false,
       starred: false,
-      duration: "10 min",
+      duration: "7 min",
+      videos: [
+        {
+          title: "What is Money?",
+          url: "https://youtu.be/pRL93risEg4",
+        },
+      ],
     },
     {
       id: 2,
       title: "Saving vs Spending",
       category: "saving",
       description:
-        "Understand when to save money and when it's okay to spend it.",
+        "Shows the difference between saving money and spending it wisely.",
       image: "🏦",
       completed: false,
-      starred: true,
-      duration: "8 min",
+      starred: false,
+      duration: "3 min",
+      videos: [
+        {
+          title: "Saving vs Spending",
+          url: "https://youtu.be/NfurkrZEn3Q",
+        },
+      ],
     },
     {
       id: 3,
-      title: "Needs vs Wants",
-      category: "budgeting",
+      title: "Earning Money",
+      category: "basics",
       description:
-        "Learn the difference between things you need and things you want.",
-      image: "🛒",
+        "Talks about ways people earn money through work and effort.",
+      image: "💵",
       completed: false,
       starred: false,
-      duration: "12 min",
+      duration: "8 min",
+      videos: [
+        {
+          title: "Earning Money",
+          url: "https://youtu.be/c4fvImcTz1Y",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "Budgeting Basics",
+      category: "budgeting",
+      description:
+        "Introduces how to plan money for needs, wants, and savings.",
+      image: "📝",
+      completed: false,
+      starred: false,
+      duration: "3 min",
+      videos: [
+        {
+          title: "Budgeting Basics",
+          url: "https://youtu.be/WRcgRimBac8",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "Giving and Sharing",
+      category: "giving",
+      description: "Highlights why sharing money or resources can help others.",
+      image: "🎁",
+      completed: false,
+      starred: false,
+      duration: "6 min",
+      videos: [
+        {
+          title: "Giving and Sharing",
+          url: "https://youtu.be/gcN_8DFTKWw",
+        },
+      ],
     },
   ],
   teens: [
@@ -67,11 +118,17 @@ const lessonsData = {
       title: "Understanding Your Relationship with Money",
       category: "basics",
       description:
-        "Explores how emotions and beliefs shape your money habits and mindset.",
+        "Covers the basics of checking and savings accounts, how they work, and why they’re important for managing money.",
       image: "💰",
       completed: true,
       starred: true,
-      duration: "15 min",
+      duration: "6 min",
+      videos: [
+        {
+          title: "Understanding Your Relationship with Money",
+          url: "https://youtu.be/0iRbD5rM5qc",
+        },
+      ],
     },
     {
       id: 5,
@@ -263,6 +320,311 @@ const lessonsData = {
       ],
     },
   ],
+  youngAdults: [
+    {
+      id: 1,
+      title: "Credit Scores",
+      category: "credit",
+      description:
+        "A quick explainer on what credit scores are, how they’re calculated, and how to build good credit.",
+      image: "💳",
+      completed: false,
+      starred: false,
+      duration: "3 min",
+      videos: [
+        {
+          title: "Credit Scores",
+          url: "https://youtu.be/1w_SM2RXTWA",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Intro to Investing (Playlist)",
+      category: "investing",
+      description:
+        "Covers investing basics with clear visuals—stocks, bonds, risk, and more advanced topics like options and margin.",
+      image: "📈",
+      completed: false,
+      starred: false,
+      duration: "1 hr",
+      videos: [
+        {
+          title: "Intro to Investing (Playlist)",
+          url: "https://youtube.com/playlist?list=PLVqSsfU_wIKLwXGos2EMSXiwHlSnC5yoa",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Taxes and Paychecks",
+      category: "taxes",
+      description:
+        "Explains paycheck deductions (taxes, Social Security, etc.) and the difference between gross and net pay.",
+      image: "📊",
+      completed: false,
+      starred: false,
+      duration: "4 min",
+      videos: [
+        {
+          title: "Taxes and Paychecks",
+          url: "https://youtu.be/uDz023pfmhY",
+        },
+        {
+          title: "How Taxes Work",
+          url: "https://youtu.be/Cox8rLXYAGQ",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "Loans and Debt",
+      category: "credit",
+      description:
+        "Introduces interest, APR, and smart debt repayment strategies for student loans or credit cards.",
+      image: "🏦",
+      completed: false,
+      starred: false,
+      duration: "3 min",
+      videos: [
+        {
+          title: "Loans and Debt",
+          url: "https://youtu.be/7VBRg4p5WDw",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "Retirement and Financial Independence",
+      category: "retirement",
+      description:
+        "Explores the FIRE movement—how to save and invest to retire early and gain long-term financial freedom.",
+      image: "🔥",
+      completed: false,
+      starred: false,
+      duration: "40 min",
+      videos: [
+        {
+          title: "Retirement and Financial Independence",
+          url: "https://youtu.be/FkV_20Faoio",
+        },
+      ],
+    },
+  ],
+  adults: [
+    {
+      id: 1,
+      title: "Understanding Money & Your Relationship With It",
+      category: "basics",
+      description:
+        "Looks at personal values, emotions, and behaviors around money to help improve financial decision-making.",
+      image: "💡",
+      completed: false,
+      starred: false,
+      duration: "12 min",
+      videos: [
+        {
+          title: "Understanding Money & Your Relationship With It",
+          url: "https://www.youtube.com/watch?v=TYqZaqKcOwg",
+        },
+        {
+          title: "Money Habits and Mindset",
+          url: "https://www.youtube.com/watch?v=yhq1cPRHR6k",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Budgeting",
+      category: "budgeting",
+      description:
+        "Learn to create a realistic budget and stick to it using the 50/30/20 rule and tracking expenses.",
+      image: "📝",
+      completed: false,
+      starred: false,
+      duration: "9 min",
+      videos: [
+        {
+          title: "Budgeting Basics",
+          url: "https://www.youtube.com/watch?v=T_776Cwvejs",
+        },
+        {
+          title: "Building a Monthly Budget",
+          url: "https://www.youtube.com/watch?v=q5LsuqGcApU",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Banking & How To Use It",
+      category: "basics",
+      description:
+        "Explains the basics of using checking and savings accounts, online banking, and ATMs.",
+      image: "🏦",
+      completed: false,
+      starred: false,
+      duration: "11 min",
+      videos: [
+        {
+          title: "Understanding Banking Services",
+          url: "https://www.youtube.com/watch?v=JTm7aABfWYs",
+        },
+        {
+          title: "Setting Up a Bank Account",
+          url: "https://www.youtube.com/watch?v=AL2jt76GT_g",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "Saving & Emergency Funds",
+      category: "saving",
+      description:
+        "Covers why emergency funds are crucial, how much to save, and where to keep the money.",
+      image: "💰",
+      completed: false,
+      starred: false,
+      duration: "8 min",
+      videos: [
+        {
+          title: "Emergency Funds",
+          url: "https://www.youtube.com/watch?v=yC3W2ZoYeL4",
+        },
+        {
+          title: "Saving Strategies",
+          url: "https://www.youtube.com/watch?v=zgXIV-dDhP0",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "Credit Cards and Credit Scores",
+      category: "credit",
+      description:
+        "Basic credit card usage tips—how interest works and how to avoid debt.",
+      image: "💳",
+      completed: false,
+      starred: false,
+      duration: "3 min",
+      videos: [
+        {
+          title: "Credit Card Usage Tips",
+          url: "https://www.youtube.com/watch?v=hbtZNq8W8Zc",
+        },
+        {
+          title: "Understanding Credit Reports and Scores",
+          url: "https://www.youtube.com/watch?v=EqpZYH9FEe8",
+        },
+      ],
+    },
+  ],
+  seniors: [
+    {
+      id: 1,
+      title: "Retirement Planning & Withdrawal Strategies",
+      category: "retirement",
+      description:
+        "Walks through how to plan retirement withdrawals to minimize taxes and maximize income.",
+      image: "📅",
+      completed: false,
+      starred: false,
+      duration: "25 min",
+      videos: [
+        {
+          title: "Retirement Planning & Withdrawal Strategies",
+          url: "https://www.youtube.com/watch?v=RexviiNL24g",
+        },
+        {
+          title: "Pacing Savings Withdrawals",
+          url: "https://www.youtube.com/watch?v=UO_0QBgXlWc",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "Social Security & Pensions",
+      category: "retirement",
+      description:
+        "Comprehensive overview of how Social Security works, when to claim, and how it affects retirement.",
+      image: "🧓",
+      completed: false,
+      starred: false,
+      duration: "55 min",
+      videos: [
+        {
+          title: "How Social Security Works",
+          url: "https://www.youtube.com/watch?v=SfkqllXCJ0o",
+        },
+        {
+          title: "Social Security Benefits",
+          url: "https://www.youtube.com/watch?v=wFXzJ3tGvBM",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Smart Spending in Retirement",
+      category: "budgeting",
+      description:
+        "Teaches retirees how to create spending plans that balance fun and sustainability.",
+      image: "💸",
+      completed: false,
+      starred: false,
+      duration: "13 min",
+      videos: [
+        {
+          title: "Smart Spending in Retirement",
+          url: "https://www.youtube.com/watch?v=VrIQSVMBxXQ",
+        },
+        {
+          title: "Cutting Expenses in Retirement",
+          url: "https://www.youtube.com/watch?v=gIWxb_-jvX8",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "Avoiding Scams & Financial Fraud",
+      category: "basics",
+      description:
+        "Educates seniors on common scams (phone, email, online) and how to stay safe.",
+      image: "🚨",
+      completed: false,
+      starred: false,
+      duration: "35 min",
+      videos: [
+        {
+          title: "Avoiding Scams & Financial Fraud",
+          url: "https://www.youtube.com/watch?v=K22fH5mlbb4",
+        },
+        {
+          title: "Detecting and Reporting Fraud",
+          url: "https://www.youtube.com/watch?v=ekhYNpXkG3I",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "Healthcare and Long-Term Financial Planning",
+      category: "retirement",
+      description:
+        "Short guide to planning for medical expenses, Medicare, and long-term care.",
+      image: "🏥",
+      completed: false,
+      starred: false,
+      duration: "7 min",
+      videos: [
+        {
+          title: "Healthcare and Long-Term Financial Planning",
+          url: "https://www.youtube.com/watch?v=3r0isZ2jgbI",
+        },
+        {
+          title: "Costs of Healthcare in Retirement",
+          url: "https://www.youtube.com/watch?v=vTLDYe4mK6I",
+        },
+      ],
+    },
+  ],
 };
 
 const categories = {
@@ -274,6 +636,18 @@ const categories = {
   investing: "Investing",
   retirement: "Retirement",
   taxes: "Taxes",
+};
+
+// Add a mapping for category colors
+const categoryColors: Record<string, string> = {
+  basics: "bg-blue-100 text-blue-800",
+  saving: "bg-green-100 text-green-800",
+  budgeting: "bg-yellow-100 text-yellow-800",
+  credit: "bg-purple-100 text-purple-800",
+  investing: "bg-pink-100 text-pink-800",
+  retirement: "bg-orange-100 text-orange-800",
+  taxes: "bg-red-100 text-red-800",
+  giving: "bg-teal-100 text-teal-800",
 };
 
 const LessonViewer = () => {
@@ -546,6 +920,7 @@ const LessonViewer = () => {
                           variant={
                             isLessonCompleted(lesson) ? "default" : "secondary"
                           }
+                          className={categoryColors[lesson.category] || ""}
                         >
                           {
                             categories[
@@ -599,7 +974,11 @@ const LessonViewer = () => {
                                   <BookOpen className="w-4 h-4" />
                                   {lesson.duration}
                                 </span>
-                                <Badge>
+                                <Badge
+                                  className={
+                                    categoryColors[lesson.category] || ""
+                                  }
+                                >
                                   {
                                     categories[
                                       lesson.category as keyof typeof categories

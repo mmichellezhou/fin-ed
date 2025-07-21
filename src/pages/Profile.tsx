@@ -321,6 +321,7 @@ const Profile = () => {
                 Available Age Groups
               </h4>
               <div className="space-y-3">
+                {/* Kids */}
                 <div
                   className={`p-4 rounded-lg border ${
                     userProfile.currentAgeGroup === "kids"
@@ -374,7 +375,7 @@ const Profile = () => {
                     </Button>
                   )}
                 </div>
-
+                {/* Teens */}
                 <div
                   className={`p-4 rounded-lg border ${
                     userProfile.currentAgeGroup === "teens"
@@ -429,16 +430,17 @@ const Profile = () => {
                     </Button>
                   )}
                 </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium text-foreground">Coming Soon</h4>
-              <div className="space-y-3">
-                <div className="p-4 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/20 opacity-60">
+                {/* Young Adults */}
+                <div
+                  className={`p-4 rounded-lg border ${
+                    userProfile.currentAgeGroup === "youngAdults"
+                      ? "border-primary bg-primary/10"
+                      : "border-border bg-muted/30"
+                  }`}
+                >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium text-muted-foreground">
+                      <h5 className="font-medium text-foreground">
                         Young Adults (19-25)
                       </h5>
                       <p className="text-sm text-muted-foreground">
@@ -448,19 +450,54 @@ const Profile = () => {
                     </div>
                     <div className="text-right">
                       <Badge
-                        variant="secondary"
-                        className="bg-muted-foreground/20"
+                        variant={
+                          userProfile.currentAgeGroup === "youngAdults"
+                            ? "default"
+                            : "secondary"
+                        }
                       >
-                        Coming Soon
+                        {userProfile.currentAgeGroup === "youngAdults"
+                          ? "Current"
+                          : "Available"}
                       </Badge>
+                      {userProfile.completedAgeGroups.includes(
+                        "youngAdults"
+                      ) && (
+                        <Badge variant="default" className="ml-2 bg-success">
+                          Completed
+                        </Badge>
+                      )}
                     </div>
                   </div>
+                  {userProfile.currentAgeGroup !== "youngAdults" && (
+                    <Button
+                      onClick={() => {
+                        const updatedProfile = {
+                          ...userProfile,
+                          currentAgeGroup: "youngAdults",
+                        };
+                        setUserProfile(updatedProfile);
+                        navigate("/lessons/youngAdults");
+                      }}
+                      variant="outline"
+                      size="sm"
+                      className="mt-3"
+                    >
+                      Switch to Young Adults
+                    </Button>
+                  )}
                 </div>
-
-                <div className="p-4 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/20 opacity-60">
+                {/* Adults */}
+                <div
+                  className={`p-4 rounded-lg border ${
+                    userProfile.currentAgeGroup === "adults"
+                      ? "border-primary bg-primary/10"
+                      : "border-border bg-muted/30"
+                  }`}
+                >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium text-muted-foreground">
+                      <h5 className="font-medium text-foreground">
                         Adults (26+)
                       </h5>
                       <p className="text-sm text-muted-foreground">
@@ -470,19 +507,52 @@ const Profile = () => {
                     </div>
                     <div className="text-right">
                       <Badge
-                        variant="secondary"
-                        className="bg-muted-foreground/20"
+                        variant={
+                          userProfile.currentAgeGroup === "adults"
+                            ? "default"
+                            : "secondary"
+                        }
                       >
-                        Coming Soon
+                        {userProfile.currentAgeGroup === "adults"
+                          ? "Current"
+                          : "Available"}
                       </Badge>
+                      {userProfile.completedAgeGroups.includes("adults") && (
+                        <Badge variant="default" className="ml-2 bg-success">
+                          Completed
+                        </Badge>
+                      )}
                     </div>
                   </div>
+                  {userProfile.currentAgeGroup !== "adults" && (
+                    <Button
+                      onClick={() => {
+                        const updatedProfile = {
+                          ...userProfile,
+                          currentAgeGroup: "adults",
+                        };
+                        setUserProfile(updatedProfile);
+                        navigate("/lessons/adults");
+                      }}
+                      variant="outline"
+                      size="sm"
+                      className="mt-3"
+                    >
+                      Switch to Adults
+                    </Button>
+                  )}
                 </div>
-
-                <div className="p-4 rounded-lg border border-dashed border-muted-foreground/30 bg-muted/20 opacity-60">
+                {/* Seniors */}
+                <div
+                  className={`p-4 rounded-lg border ${
+                    userProfile.currentAgeGroup === "seniors"
+                      ? "border-primary bg-primary/10"
+                      : "border-border bg-muted/30"
+                  }`}
+                >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium text-muted-foreground">
+                      <h5 className="font-medium text-foreground">
                         Seniors (65+)
                       </h5>
                       <p className="text-sm text-muted-foreground">
@@ -492,13 +562,40 @@ const Profile = () => {
                     </div>
                     <div className="text-right">
                       <Badge
-                        variant="secondary"
-                        className="bg-muted-foreground/20"
+                        variant={
+                          userProfile.currentAgeGroup === "seniors"
+                            ? "default"
+                            : "secondary"
+                        }
                       >
-                        Coming Soon
+                        {userProfile.currentAgeGroup === "seniors"
+                          ? "Current"
+                          : "Available"}
                       </Badge>
+                      {userProfile.completedAgeGroups.includes("seniors") && (
+                        <Badge variant="default" className="ml-2 bg-success">
+                          Completed
+                        </Badge>
+                      )}
                     </div>
                   </div>
+                  {userProfile.currentAgeGroup !== "seniors" && (
+                    <Button
+                      onClick={() => {
+                        const updatedProfile = {
+                          ...userProfile,
+                          currentAgeGroup: "seniors",
+                        };
+                        setUserProfile(updatedProfile);
+                        navigate("/lessons/seniors");
+                      }}
+                      variant="outline"
+                      size="sm"
+                      className="mt-3"
+                    >
+                      Switch to Seniors
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

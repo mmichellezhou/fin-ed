@@ -60,10 +60,10 @@ const ProfileSetup = () => {
             averageScore: 0,
             streak: 0,
             lastActivity: new Date().toISOString(),
+            videoProgress: {},
           },
         },
         badges: [],
-        recentActivity: [],
       };
 
       setUserProfile(newProfile);
@@ -150,13 +150,6 @@ const ProfileSetup = () => {
               >
                 Continue
               </Button>
-              <Button
-                onClick={() => navigate("/lesson-selector")}
-                variant="outline"
-                className="w-full"
-              >
-                Skip - Go to Learning Path
-              </Button>
             </div>
           </Card>
         )}
@@ -230,15 +223,6 @@ const ProfileSetup = () => {
               >
                 Start Learning Journey
               </Button>
-              <div>
-                <Button
-                  onClick={() => navigate("/lesson-selector")}
-                  variant="outline"
-                  className="px-8 py-3 text-lg"
-                >
-                  Skip - Choose Learning Path
-                </Button>
-              </div>
             </div>
           </div>
         )}

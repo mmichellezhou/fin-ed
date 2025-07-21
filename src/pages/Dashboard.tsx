@@ -218,65 +218,6 @@ const Dashboard = () => {
             </div>
           </Card>
         </div>
-
-        {/* Recent Activity */}
-        <Card
-          className="p-6 mt-8 animate-fade-in"
-          style={{ animationDelay: "0.7s" }}
-        >
-          <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Star className="w-5 h-5" />
-            Recent Activity
-          </h2>
-
-          <div className="space-y-4">
-            {userProfile.recentActivity.map((activity, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-4 rounded-lg bg-muted/30"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      activity.type === "lesson"
-                        ? "bg-primary/10"
-                        : "bg-success/10"
-                    }`}
-                  >
-                    {activity.type === "lesson" ? (
-                      <BookOpen
-                        className={`w-5 h-5 ${
-                          activity.type === "lesson"
-                            ? "text-primary"
-                            : "text-success"
-                        }`}
-                      />
-                    ) : (
-                      <Target className="w-5 h-5 text-success" />
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-medium text-foreground">
-                      {activity.title}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {activity.date}
-                    </p>
-                  </div>
-                </div>
-
-                {activity.score && (
-                  <Badge
-                    variant={activity.score >= 80 ? "default" : "secondary"}
-                    className={activity.score >= 80 ? "bg-success" : ""}
-                  >
-                    {activity.score}%
-                  </Badge>
-                )}
-              </div>
-            ))}
-          </div>
-        </Card>
       </div>
     </div>
   );

@@ -118,15 +118,8 @@ export const LessonVideosDropdown = ({
                       <div className="flex items-center gap-3">
                         <input
                           type="checkbox"
-                          checked={isCompleted || localCompleted[idx]}
+                          checked={isCompleted}
                           onChange={() => {
-                            // Update local state immediately for testing
-                            setLocalCompleted((prev) => ({
-                              ...prev,
-                              [idx]: !prev[idx],
-                            }));
-
-                            // Also try to update UserContext
                             updateVideoProgress(
                               ageGroup,
                               lessonId,
@@ -140,11 +133,7 @@ export const LessonVideosDropdown = ({
                           {video.title}
                         </span>
                         <span className="text-xs text-gray-500">
-                          (
-                          {isCompleted || localCompleted[idx]
-                            ? "Completed"
-                            : "Not completed"}
-                          )
+                          ({isCompleted ? "Completed" : "Not completed"})
                         </span>
                       </div>
                     </div>

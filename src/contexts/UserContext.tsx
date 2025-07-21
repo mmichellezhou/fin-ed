@@ -35,15 +35,6 @@ export interface UserProfile {
     icon: string;
     ageGroup: string;
   }[];
-  recentActivity: {
-    type: "lesson" | "quiz" | "video";
-    title: string;
-    date: string;
-    score?: number;
-    ageGroup: string;
-    lessonId?: number;
-    videoIndex?: number;
-  }[];
 }
 
 interface UserContextType {
@@ -176,30 +167,30 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     // If all videos are completed, update lesson completion
     if (completedVideos === totalVideos && totalVideos > 0) {
       // Add lesson completion to recent activity
-      updatedProfile.recentActivity.unshift({
-        type: "lesson",
-        title: `Completed lesson`,
-        date: new Date().toISOString(),
-        ageGroup,
-        lessonId,
-      });
+      // updatedProfile.recentActivity.unshift({
+      //   type: "lesson",
+      //   title: `Completed lesson`,
+      //   date: new Date().toISOString(),
+      //   ageGroup,
+      //   lessonId,
+      // });
 
       // Update completed lessons count
       updatedProfile.progress[ageGroup].completedLessons++;
     }
 
     // Add video completion to recent activity
-    updatedProfile.recentActivity.unshift({
-      type: "video",
-      title: `Watched video in lesson`,
-      date: new Date().toISOString(),
-      ageGroup,
-      lessonId,
-      videoIndex,
-    });
+    // updatedProfile.recentActivity.unshift({
+    //   type: "video",
+    //   title: `Watched video in lesson`,
+    //   date: new Date().toISOString(),
+    //   ageGroup,
+    //   lessonId,
+    //   videoIndex,
+    // });
 
     // Keep only last 10 activities
-    updatedProfile.recentActivity = updatedProfile.recentActivity.slice(0, 10);
+    // updatedProfile.recentActivity = updatedProfile.recentActivity.slice(0, 10);
 
     updatedProfile.progress[ageGroup].lastActivity = new Date().toISOString();
     setUserProfile(updatedProfile);
@@ -223,10 +214,31 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     totalVideos: number
   ) => {
     if (!userProfile) return { completed: 0, total: totalVideos };
-    const videos = userProfile.progress[ageGroup]?.videoProgress?.[lessonId];
+    const progress = userProfile.progress[ageGroup];
+    if (!progress) return { completed: 0, total: totalVideos };
+    const videos = progress.videoProgress?.[lessonId];
     if (!videos) return { completed: 0, total: totalVideos };
 
-    const completed = Object.values(videos).filter(Boolean).length;
+    // Auto-cleanup: remove out-of-bounds video progress
+    const validIndices = Array.from({ length: totalVideos }, (_, i) =>
+      i.toString()
+    );
+    let cleaned = false;
+    Object.keys(videos).forEach((idx) => {
+      if (!validIndices.includes(idx)) {
+        delete videos[idx];
+        cleaned = true;
+      }
+    });
+    if (cleaned) {
+      // Save cleaned progress back to userProfile
+      setUserProfile({ ...userProfile });
+    }
+
+    const completed = Object.keys(videos)
+      .filter((idx) => Number(idx) < totalVideos)
+      .map((idx) => videos[idx])
+      .filter(Boolean).length;
     return { completed, total: totalVideos };
   };
 
