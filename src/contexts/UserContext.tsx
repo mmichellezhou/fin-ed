@@ -19,12 +19,15 @@ export interface UserProfile {
       totalQuizzes: number;
       averageScore: number;
       streak: number;
+      maxStreak?: number;
+      lastStreakDate?: string;
       lastActivity: string;
       videoProgress: {
         [lessonId: number]: {
           [videoIndex: number]: boolean;
         };
       };
+      quizScores: number[];
     };
   };
   badges: {
@@ -110,8 +113,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         totalQuizzes: 0,
         averageScore: 0,
         streak: 0,
+        maxStreak: 0,
+        lastStreakDate: "",
         lastActivity: new Date().toISOString(),
         videoProgress: {},
+        quizScores: [],
       };
     }
 
@@ -146,8 +152,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         totalQuizzes: 0,
         averageScore: 0,
         streak: 0,
+        maxStreak: 0,
+        lastStreakDate: "",
         lastActivity: new Date().toISOString(),
         videoProgress: {},
+        quizScores: [],
       };
     }
 
@@ -157,6 +166,29 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
     updatedProfile.progress[ageGroup].videoProgress[lessonId][videoIndex] =
       completed;
+
+    // --- Learning streak logic ---
+    if (completed) {
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+      const lastStreakDate = updatedProfile.progress[ageGroup].lastStreakDate || "";
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      if (lastStreakDate === today) {
+        // Already counted today, do nothing
+      } else if (lastStreakDate === yesterday) {
+        updatedProfile.progress[ageGroup].streak = (updatedProfile.progress[ageGroup].streak || 0) + 1;
+      } else {
+        updatedProfile.progress[ageGroup].streak = 1;
+      }
+      updatedProfile.progress[ageGroup].lastStreakDate = today;
+      // Update max streak
+      if ((updatedProfile.progress[ageGroup].streak || 0) > (updatedProfile.progress[ageGroup].maxStreak || 0)) {
+        updatedProfile.progress[ageGroup].maxStreak = updatedProfile.progress[ageGroup].streak;
+      }
+    } else {
+      // If a video is unchecked, check if the streak should be reset
+      // (Optional: you may want to reset streak if a user undoes all progress for today)
+    }
+    // --- End learning streak logic ---
 
     // Check if all videos in the lesson are completed
     const lessonVideos =
@@ -255,8 +287,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
         totalQuizzes: 0,
         averageScore: 0,
         streak: 0,
+        maxStreak: 0,
+        lastStreakDate: "",
         lastActivity: new Date().toISOString(),
         videoProgress: {},
+        quizScores: [],
       };
     }
 

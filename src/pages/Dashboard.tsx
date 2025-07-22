@@ -49,7 +49,68 @@ const Dashboard = () => {
   const totalLessonsCount = currentLessons.length;
   const overallProgress = totalLessonsCount > 0 ? (completedLessonsCount / totalLessonsCount) * 100 : 0;
 
-  const earnedBadges = userProfile.badges.filter((badge) => badge.earned);
+  // --- Progress by Category logic ---
+  const categories: string[] = Array.from(new Set(currentLessons.map(lesson => lesson.category)));
+  const isLessonCompleted = (lesson) => {
+    if (!lesson.videos || lesson.videos.length === 0) return false;
+    const videoProgress = userProfile.progress[userProfile.currentAgeGroup]?.videoProgress?.[lesson.id] || {};
+    const completedVideos = Object.values(videoProgress).filter(Boolean).length;
+    return completedVideos === lesson.videos.length && lesson.videos.length > 0;
+  };
+  const categoryProgress = categories.map((category: string) => {
+    const lessonsInCategory = currentLessons.filter(lesson => lesson.category === category);
+    const total = lessonsInCategory.length;
+    const completed = lessonsInCategory.filter(isLessonCompleted).length;
+    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+    return {
+      name: category.charAt(0).toUpperCase() + category.slice(1),
+      total,
+      completed,
+      percentage,
+    };
+  });
+  const userProgress = { categoryProgress };
+
+  // BADGE LOGIC
+  const badgeDefinitions = [
+    { id: 1, name: "First Steps", description: "Complete your first lesson", icon: "🎯", ageGroup: "all" },
+    { id: 2, name: "Quiz Master", description: "Score 90% or higher on 3 quizzes", icon: "🧠", ageGroup: "all" },
+    { id: 3, name: "Consistent Learner", description: "Complete lessons 5 days in a row", icon: "🔥", ageGroup: "all" },
+    { id: 5, name: "Savings Champion", description: "Complete all saving lessons", icon: "🏦", ageGroup: "all" },
+    { id: 4, name: "Budget Pro", description: "Complete all budgeting lessons", icon: "🛒", ageGroup: "all" },
+    { id: 6, name: "Investment Guru", description: "Complete all investing lessons", icon: "📈", ageGroup: "all" }
+  ];
+
+  // 1. First Steps: Complete your first lesson
+  const firstStepsEarned = currentLessons.some(isLessonCompleted);
+  // 2. Quiz Master: Score 90% or higher on 3 quizzes
+  const quizScores = Array.isArray(userProfile.progress[userProfile.currentAgeGroup]?.quizScores)
+    ? userProfile.progress[userProfile.currentAgeGroup].quizScores
+    : [];
+  const quizMasterEarned = quizScores.filter((score) => score >= 90).length >= 3;
+  // 3. Consistent Learner: Complete lessons 5 days in a row
+  const streak = userProfile.progress[userProfile.currentAgeGroup]?.streak || 0;
+  const consistentLearnerEarned = streak >= 5;
+  // 4. Budget Pro: Complete all budgeting lessons
+  const budgetingLessons = currentLessons.filter((lesson) => lesson.category === "budgeting");
+  const budgetProEarned = budgetingLessons.length > 0 && budgetingLessons.every(isLessonCompleted);
+  // 5. Savings Champion: Complete all saving lessons
+  const savingLessons = currentLessons.filter((lesson) => lesson.category === "saving");
+  const savingsChampionEarned = savingLessons.length > 0 && savingLessons.every(isLessonCompleted);
+  // 6. Investment Guru: Complete all investing lessons
+  const investingLessons = currentLessons.filter((lesson) => lesson.category === "investing");
+  const investmentGuruEarned = investingLessons.length > 0 && investingLessons.every(isLessonCompleted);
+
+  const computedBadges = badgeDefinitions.map((badge) => {
+    let earned = false;
+    if (badge.id === 1) earned = firstStepsEarned;
+    if (badge.id === 2) earned = quizMasterEarned;
+    if (badge.id === 3) earned = consistentLearnerEarned;
+    if (badge.id === 4) earned = budgetProEarned;
+    if (badge.id === 5) earned = savingsChampionEarned;
+    if (badge.id === 6) earned = investmentGuruEarned;
+    return { ...badge, earned };
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-accent/20 py-8 px-4">
@@ -83,7 +144,7 @@ const Dashboard = () => {
               </div>
               <BookOpen className="w-8 h-8 text-primary" />
             </div>
-            <Progress value={overallProgress} className="mt-3 bg-gradient-to-r from-primary to-secondary" />
+            <Progress value={overallProgress} className="h-3 mt-3" />
           </Card>
 
           <Card
@@ -128,13 +189,13 @@ const Dashboard = () => {
               <div>
                 <p className="text-sm text-muted-foreground">Badges Earned</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {earnedBadges.length}/{userProfile.badges.length}
+                  {computedBadges.filter((badge) => badge.earned).length}/{computedBadges.length}
                 </p>
               </div>
               <Medal className="w-8 h-8 text-warning" />
             </div>
             <div className="mt-3 text-xs text-muted-foreground">
-              {userProfile.badges.length - earnedBadges.length} more to unlock
+              {computedBadges.length - computedBadges.filter((badge) => badge.earned).length} more to unlock
             </div>
           </Card>
         </div>
@@ -150,11 +211,23 @@ const Dashboard = () => {
               Progress by Category
             </h2>
             <div className="space-y-4">
-              <div className="text-center py-8">
-                <p className="text-muted-foreground">
-                  Category progress will be available as you complete lessons
-                </p>
-              </div>
+              {userProgress.categoryProgress.map((category, index) => (
+                <div key={category.name} className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium text-foreground">{category.name}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {category.completed}/{category.total}
+                    </span>
+                  </div>
+                  <Progress 
+                    value={category.percentage} 
+                    className="h-3"
+                  />
+                  <div className="text-xs text-muted-foreground text-right">
+                    {category.percentage}% complete
+                  </div>
+                </div>
+              ))}
             </div>
           </Card>
 
@@ -169,30 +242,22 @@ const Dashboard = () => {
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {userProfile.badges.map((badge, index) => (
+              {computedBadges.map((badge) => (
                 <div
                   key={badge.id}
                   className={`p-4 rounded-lg border transition-all ${
                     badge.earned
                       ? "border-success/50 bg-success/10"
-                      : "border-border bg-muted/30 opacity-60"
+                      : "border-border bg-muted/30 opacity-60 opacity-50"
                   }`}
                 >
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                      <Trophy
-                        className={`w-6 h-6 ${
-                          badge.earned
-                            ? "text-warning"
-                            : "text-muted-foreground"
-                        }`}
-                      />
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                      {badge.icon}
                     </div>
                     <h3
                       className={`font-medium mb-1 ${
-                        badge.earned
-                          ? "text-foreground"
-                          : "text-muted-foreground"
+                        badge.earned ? "text-foreground" : "text-muted-foreground"
                       }`}
                     >
                       {badge.name}

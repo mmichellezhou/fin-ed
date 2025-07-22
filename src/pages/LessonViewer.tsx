@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { StartLessonButton } from "./StartLessonButton";
 import {
@@ -833,12 +834,7 @@ const LessonViewer = () => {
           <p className="text-muted-foreground mb-4">
             Progress: {completedCount} of {totalLessons} lessons completed
           </p>
-          <div className="w-full max-w-md mx-auto bg-muted rounded-full h-2">
-            <div
-              className="bg-gradient-to-r from-primary to-secondary h-2 rounded-full transition-all duration-500"
-              style={{ width: `${(completedCount / totalLessons) * 100}%` }}
-            />
-          </div>
+          <Progress value={(completedCount / totalLessons) * 100} className="h-3 max-w-md mx-auto mt-0" />
 
           {/* Age Group Note */}
           <div className="mt-4 max-w-xl mx-auto text-center">
