@@ -939,7 +939,7 @@ const LessonViewer = () => {
             {/* Sort Dropdown */}
             <DropdownMenu open={openDropdown === "sort"} onOpenChange={(open) => setOpenDropdown(open ? "sort" : null)}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
                   {sortBy ? (sortBy === "name" ? "Name" : sortBy === "shortest" ? "Shortest" : sortBy === "longest" ? "Longest" : sortBy === "starred" ? "Starred" : "Sort by") : "Sort by"}
                   <ChevronDown className={`ml-2 transition-transform ${openDropdown === "sort" ? "rotate-180" : "rotate-0"}`} />
                 </Button>
@@ -955,7 +955,7 @@ const LessonViewer = () => {
             {/* Category Dropdown */}
             <DropdownMenu open={openDropdown === "category"} onOpenChange={(open) => setOpenDropdown(open ? "category" : null)}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
                   {categoryFilter === "all" ? "Category" : categories[categoryFilter as keyof typeof categories]}
                   <ChevronDown className={`ml-2 transition-transform ${openDropdown === "category" ? "rotate-180" : "rotate-0"}`} />
                 </Button>
@@ -970,7 +970,7 @@ const LessonViewer = () => {
             {/* Completion Dropdown */}
             <DropdownMenu open={openDropdown === "completion"} onOpenChange={(open) => setOpenDropdown(open ? "completion" : null)}>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
                   {completionFilter ? (completionFilter === "todo" ? "To Do" : completionFilter === "inprogress" ? "In Progress" : "Completed") : "Completion"}
                   <ChevronDown className={`ml-2 transition-transform ${openDropdown === "completion" ? "rotate-180" : "rotate-0"}`} />
                 </Button>
