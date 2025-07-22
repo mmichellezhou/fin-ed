@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Target, ChevronDown, Play, Check, ExternalLink } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { useUser } from "@/contexts/UserContext";
 
 interface LessonDetailsDialogProps {
@@ -150,12 +151,7 @@ const LessonDetailsDialog: React.FC<LessonDetailsDialogProps> = ({
               <div className="mt-4 p-5 bg-background border border-border rounded-xl shadow-md w-full max-w-lg mx-auto space-y-3 animate-fade-in">
                 {/* Progress bar */}
                 <div>
-                  <div className="w-full bg-muted rounded-full h-3 mb-2">
-                    <div
-                      className="bg-gradient-to-r from-primary to-success h-3 rounded-full transition-all duration-300"
-                      style={{ width: `${progressPercentage}%` }}
-                    />
-                  </div>
+                  <Progress value={progressPercentage} className="h-3 mb-2" />
                   <div className="text-sm text-muted-foreground text-center">
                     {combinedProgress.completed} of {combinedProgress.total} videos completed
                     {combinedProgress.completed === combinedProgress.total && combinedProgress.total > 0 && ' 🎉'}
