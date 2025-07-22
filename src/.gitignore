@@ -22,3 +22,5 @@ yarn-error.log*
 
 # system
 Thumbs.db
+
+models/*.gguf
