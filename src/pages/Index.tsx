@@ -6,14 +6,11 @@ import {
   ArrowRight,
   BookOpen,
   Target,
-  Users,
   TrendingUp,
-  Star,
   Shield,
   UserCheck,
   Trophy,
-  Briefcase,
-  GraduationCap,
+  Handshake,
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 
@@ -162,7 +159,7 @@ const Index = () => {
       </section>
 
       {/* Impact Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-accent/5 to-secondary/5">
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-background to-success/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center animate-fade-in">
             <h2 className="text-3xl lg:text-4xl font-playfair font-bold text-foreground mb-6">
@@ -203,7 +200,7 @@ const Index = () => {
 
               <div className="text-center">
                 <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-6 h-6 text-secondary" />
+                  <Handshake className="w-6 h-6 text-success" />
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
                   Community Support

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { LessonVideosDropdown } from "./LessonVideosDropdown";
+import { StartLessonButton } from "./StartLessonButton";
 import {
   Dialog,
   DialogContent,
@@ -21,8 +21,16 @@ import {
   Award,
   Filter,
   ArrowRight,
+  ChevronDown,
+  Target,
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 // future consideration: automating categorization based on title/video, default linking 'image' to category
 // Mock lesson data
 const lessonsData = {
@@ -174,7 +182,7 @@ const lessonsData = {
     },
     {
       id: 7,
-      title: " Saving and Emergency Funds",
+      title: "Saving and Emergency Funds",
       category: "saving",
       description:
         "Emphasizes having 3–6 months of expenses saved up. Discusses short‑ vs. long‑term savings goals and automating saving.",
@@ -398,8 +406,8 @@ const lessonsData = {
       title: "Retirement and Financial Independence",
       category: "retirement",
       description:
-        "Explores the FIRE movement—how to save and invest to retire early and gain long-term financial freedom.",
-      image: "🔥",
+        "Explores the FIRE movement––how to save and invest to retire early and gain long-term financial freedom.",
+      image: "💒",
       completed: false,
       starred: false,
       duration: "40 min",
@@ -650,6 +658,29 @@ const categoryColors: Record<string, string> = {
   giving: "bg-teal-100 text-teal-800",
 };
 
+// Helper to parse duration strings like '1 hr', '30 min', '3 hr 40 min', etc.
+function parseDurationToMinutes(duration: string): number {
+  let total = 0;
+  const hrMatch = duration.match(/(\d+)\s*hr/);
+  const minMatch = duration.match(/(\d+)\s*min/);
+  if (hrMatch) total += parseInt(hrMatch[1], 10) * 60;
+  if (minMatch) total += parseInt(minMatch[1], 10);
+  return total;
+}
+
+// Helper to format age group label
+function formatAgeGroupLabel(ageGroup: string | undefined) {
+  if (!ageGroup) return '';
+  // Insert space before capital letters (except the first), then capitalize each word
+  return ageGroup
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, (str) => str.toUpperCase())
+    .trim()
+    .split(' ')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 const LessonViewer = () => {
   const { ageGroup } = useParams<{ ageGroup: string }>();
   const navigate = useNavigate();
@@ -664,6 +695,12 @@ const LessonViewer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedLesson, setSelectedLesson] = useState<any>(null);
+  // Add state for filters
+  const [sortBy, setSortBy] = useState<string>("");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [completionFilter, setCompletionFilter] = useState<string>("");
+  // Add state to track open dropdowns
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // Redirect to setup if no user profile
   useEffect(() => {
@@ -671,7 +708,11 @@ const LessonViewer = () => {
       navigate("/setup");
       return;
     }
-  }, [userProfile, navigate]);
+    // If no ageGroup param, redirect to user's current age group
+    if (!ageGroup && userProfile.currentAgeGroup) {
+      navigate(`/lessons/${userProfile.currentAgeGroup}`);
+    }
+  }, [userProfile, navigate, ageGroup]);
 
   useEffect(() => {
     const groupLessons =
@@ -683,17 +724,23 @@ const LessonViewer = () => {
   // Check if the age group has lessons available
   const hasLessons = lessons.length > 0;
 
+  // Update filter logic
   useEffect(() => {
     let filtered = lessons;
-
-    // Filter by category
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(
-        (lesson) => lesson.category === selectedCategory
-      );
+    // Category filter
+    if (categoryFilter !== "all") {
+      filtered = filtered.filter((lesson) => lesson.category === categoryFilter);
     }
-
-    // Filter by search term
+    // Completion filter
+    if (completionFilter) {
+      filtered = filtered.filter((lesson) => {
+        if (completionFilter === "todo") return !isLessonCompleted(lesson) && !(lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0));
+        if (completionFilter === "inprogress") return !isLessonCompleted(lesson) && lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0);
+        if (completionFilter === "completed") return isLessonCompleted(lesson);
+        return true;
+      });
+    }
+    // Search term
     if (searchTerm) {
       filtered = filtered.filter(
         (lesson) =>
@@ -701,16 +748,18 @@ const LessonViewer = () => {
           lesson.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    // Sort starred lessons to top
-    filtered.sort((a, b) => {
-      if (a.starred && !b.starred) return -1;
-      if (!a.starred && b.starred) return 1;
-      return 0;
-    });
-
+    // Sort
+    if (sortBy === "name") {
+      filtered = [...filtered].sort((a, b) => a.title.trim().localeCompare(b.title.trim()));
+    } else if (sortBy === "shortest") {
+      filtered = [...filtered].sort((a, b) => parseDurationToMinutes(a.duration) - parseDurationToMinutes(b.duration));
+    } else if (sortBy === "longest") {
+      filtered = [...filtered].sort((a, b) => parseDurationToMinutes(b.duration) - parseDurationToMinutes(a.duration));
+    } else if (sortBy === "starred") {
+      filtered = [...filtered].sort((a, b) => (b.starred ? 1 : 0) - (a.starred ? 1 : 0));
+    }
     setFilteredLessons(filtered);
-  }, [lessons, selectedCategory, searchTerm]);
+  }, [lessons, categoryFilter, completionFilter, searchTerm, sortBy]);
 
   const toggleStar = (lessonId: number) => {
     const updatedLessons = lessons.map((lesson) =>
@@ -745,6 +794,16 @@ const LessonViewer = () => {
     );
   };
 
+  // Helper for lesson status badge
+  const getLessonStatus = (lesson: any) => {
+    if (isLessonCompleted(lesson)) return { text: "Completed", className: "bg-success text-white" };
+    // Check for in progress: if any video has progress > 0
+    if (lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0)) {
+      return { text: "In Progress", className: "bg-warning text-white" };
+    }
+    return { text: "To Do", className: "bg-primary text-white" };
+  };
+
   const completedCount = lessons.filter((l) => isLessonCompleted(l)).length;
   const totalLessons = lessons.length;
   const isCurrentAgeGroupCompleted =
@@ -756,7 +815,7 @@ const LessonViewer = () => {
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <h1 className="text-4xl font-playfair font-bold text-foreground mb-2">
-            {ageGroup?.charAt(0).toUpperCase() + ageGroup?.slice(1)} Lessons
+            {formatAgeGroupLabel(ageGroup)} Lessons
           </h1>
           <p className="text-muted-foreground mb-4">
             Progress: {completedCount} of {totalLessons} lessons completed
@@ -769,10 +828,9 @@ const LessonViewer = () => {
           </div>
 
           {/* Age Group Note */}
-          <div className="mt-4 p-3 bg-accent/30 rounded-lg max-w-md mx-auto">
+          <div className="mt-4 max-w-xl mx-auto text-center">
             <p className="text-sm text-muted-foreground">
-              💡 Want to explore other age groups? Visit your profile in the
-              user menu to switch age groups.
+              💡 Want to explore other age groups? Visit your profile to switch.
             </p>
           </div>
         </div>
@@ -855,31 +913,62 @@ const LessonViewer = () => {
 
         {/* Search and Filter */}
         {hasLessons && (
-          <div className="flex flex-col md:flex-row gap-4 mb-8 animate-fade-in">
+          <div className="flex flex-col md:flex-row gap-4 mb-8 animate-fade-in bg-muted px-4 py-2 items-center rounded-full">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="Search lessons..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-white"
               />
             </div>
-
-            <div className="flex gap-2 flex-wrap">
-              {Object.entries(categories).map(([key, label]) => (
-                <Button
-                  key={key}
-                  variant={selectedCategory === key ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(key)}
-                  className="flex items-center gap-1"
-                >
-                  <Filter className="w-3 h-3" />
-                  {label}
+            {/* Sort Dropdown */}
+            <DropdownMenu open={openDropdown === "sort"} onOpenChange={(open) => setOpenDropdown(open ? "sort" : null)}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                  {sortBy ? (sortBy === "name" ? "Name" : sortBy === "shortest" ? "Shortest" : sortBy === "longest" ? "Longest" : sortBy === "starred" ? "Starred" : "Sort by") : "Sort by"}
+                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "sort" ? "rotate-180" : "rotate-0"}`} />
                 </Button>
-              ))}
-            </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setSortBy("")}>Sort by</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("name")}>Name</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("shortest")}>Shortest</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("longest")}>Longest</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("starred")}>Starred</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* Category Dropdown */}
+            <DropdownMenu open={openDropdown === "category"} onOpenChange={(open) => setOpenDropdown(open ? "category" : null)}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                  {categoryFilter === "all" ? "Category" : categories[categoryFilter as keyof typeof categories]}
+                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "category" ? "rotate-180" : "rotate-0"}`} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setCategoryFilter("all")}>Category</DropdownMenuItem>
+                {Object.entries(categories).filter(([key]) => key !== "all").map(([key, label]) => (
+                  <DropdownMenuItem key={key} onClick={() => setCategoryFilter(key)}>{label}</DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* Completion Dropdown */}
+            <DropdownMenu open={openDropdown === "completion"} onOpenChange={(open) => setOpenDropdown(open ? "completion" : null)}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white">
+                  {completionFilter ? (completionFilter === "todo" ? "To Do" : completionFilter === "inprogress" ? "In Progress" : "Completed") : "Completion"}
+                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "completion" ? "rotate-180" : "rotate-0"}`} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setCompletionFilter("")}>Completion</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCompletionFilter("todo")}>To Do</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCompletionFilter("inprogress")}>In Progress</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCompletionFilter("completed")}>Completed</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         )}
 
@@ -890,14 +979,10 @@ const LessonViewer = () => {
               {filteredLessons.map((lesson, index) => (
                 <Card
                   key={lesson.id}
-                  className={`card-interactive animate-fade-in ${
-                    isLessonCompleted(lesson)
-                      ? "border-success/50 bg-success/5"
-                      : ""
-                  }`}
+                  className="card-interactive animate-fade-in h-full flex flex-col"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col h-full">
                     <div className="flex justify-between items-start mb-4">
                       <div className="text-4xl mb-2">{lesson.image}</div>
                       <Button
@@ -905,32 +990,26 @@ const LessonViewer = () => {
                         size="sm"
                         onClick={() => toggleStar(lesson.id)}
                         className={
-                          lesson.starred
+                          (lesson.starred
                             ? "text-yellow-400"
-                            : "text-muted-foreground hover:text-yellow-400"
+                            : "text-muted-foreground hover:text-yellow-400") +
+                          " aspect-square w-8 h-8 p-0 rounded"
                         }
                       >
                         <Star className="w-4 h-4 fill-current" />
                       </Button>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
+                    <div className="space-y-3 flex-1">
+                      <div className="flex items-center gap-2 justify-start">
                         <Badge
-                          variant={
-                            isLessonCompleted(lesson) ? "default" : "secondary"
-                          }
-                          className={categoryColors[lesson.category] || ""}
+                          variant={isLessonCompleted(lesson) ? "default" : "secondary"}
+                          className={(categoryColors[lesson.category] || "") + " pointer-events-none select-none"}
                         >
-                          {
-                            categories[
-                              lesson.category as keyof typeof categories
-                            ]
-                          }
+                          {categories[lesson.category as keyof typeof categories]}
                         </Badge>
-                        {isLessonCompleted(lesson) && (
-                          <Award className="w-4 h-4 text-success" />
-                        )}
+                        {/* Status badge */}
+                        <Badge className={getLessonStatus(lesson).className + " pointer-events-none select-none"}>{getLessonStatus(lesson).text}</Badge>
                       </div>
 
                       <h3 className="font-semibold text-lg text-foreground">
@@ -940,86 +1019,72 @@ const LessonViewer = () => {
                       <p className="text-muted-foreground text-sm leading-relaxed">
                         {lesson.description}
                       </p>
+                    </div>
 
-                      <div className="flex items-center justify-between pt-4">
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                          <BookOpen className="w-3 h-3" />
-                          {lesson.duration}
-                        </span>
-
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => setSelectedLesson(lesson)}
-                            >
-                              View Details
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-lg">
-                            <DialogHeader>
-                              <DialogTitle className="flex items-center gap-2">
-                                <span className="text-2xl">{lesson.image}</span>
-                                {lesson.title}
-                              </DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <p className="text-muted-foreground">
-                                {lesson.description}
-                              </p>
-
-                              <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                <span className="flex items-center gap-1">
-                                  <BookOpen className="w-4 h-4" />
-                                  {lesson.duration}
-                                </span>
-                                <Badge
-                                  className={
-                                    categoryColors[lesson.category] || ""
-                                  }
-                                >
-                                  {
-                                    categories[
-                                      lesson.category as keyof typeof categories
-                                    ]
-                                  }
-                                </Badge>
-                              </div>
-
-                              <div className="flex gap-2 pt-4">
-                                {lesson.videos && lesson.videos.length > 0 ? (
-                                  <LessonVideosDropdown
-                                    videos={lesson.videos}
-                                    lessonId={lesson.id}
-                                    ageGroup={ageGroup || ""}
-                                  />
-                                ) : (
-                                  <Button
-                                    onClick={() => startLesson(lesson)}
-                                    className="flex-1 flex items-center gap-2"
-                                    variant="hero"
-                                  >
-                                    <Play className="w-4 h-4" />
-                                    Start Lesson
-                                  </Button>
-                                )}
-
-                                {isLessonCompleted(lesson) && (
-                                  <Button
-                                    onClick={() => goToQuiz(lesson)}
-                                    variant="success"
-                                    className="flex items-center gap-2"
-                                  >
-                                    <Award className="w-4 h-4" />
-                                    Take Quiz
-                                  </Button>
-                                )}
-                              </div>
+                    <div className="flex items-center justify-between pt-4 mt-auto">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <BookOpen className="w-3 h-3" />
+                        {lesson.duration}
+                      </span>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setSelectedLesson(lesson)}
+                          >
+                            View Details
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="max-w-lg">
+                          <DialogHeader>
+                            <DialogTitle className="flex items-center gap-2">
+                              <span className="text-2xl">{lesson.image}</span>
+                              {lesson.title}
+                            </DialogTitle>
+                          </DialogHeader>
+                          <div className="space-y-4">
+                            <p className="text-muted-foreground">
+                              {lesson.description}
+                            </p>
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <BookOpen className="w-4 h-4" />
+                                {lesson.duration}
+                              </span>
+                              <Badge
+                                className={
+                                  categoryColors[lesson.category] || ""
+                                }
+                              >
+                                {
+                                  categories[
+                                    lesson.category as keyof typeof categories
+                                  ]
+                                }
+                              </Badge>
                             </div>
-                          </DialogContent>
-                        </Dialog>
-                      </div>
+                            <div className="flex gap-2 pt-4">
+                              <StartLessonButton
+                                videos={lesson.videos}
+                                lessonId={lesson.id}
+                                ageGroup={ageGroup || ""}
+                                onStart={() => startLesson(lesson)}
+                              />
+                              {isLessonCompleted(lesson) && (
+                                <Button
+                                  onClick={() => goToQuiz(lesson)}
+                                  variant="success"
+                                  size="default"
+                                >
+                                  <Target className="w-4 h-4" />
+                                  Take Quiz
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </div>
                 </Card>

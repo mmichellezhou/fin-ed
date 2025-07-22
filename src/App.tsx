@@ -29,8 +29,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/setup" element={<ProfileSetup />} />
-              <Route path="/lesson-selector" element={<LessonSelector />} />
-              <Route path="/lessons" element={<LessonSelector />} />
+              {/* <Route path="/lesson-selector" element={<LessonSelector />} /> */}
+              <Route path="/lessons" element={<LessonViewer />} />
               <Route path="/lessons/:ageGroup" element={<LessonViewer />} />
               <Route path="/quiz" element={<QuizPage />} />
               <Route path="/dashboard" element={<Dashboard />} />

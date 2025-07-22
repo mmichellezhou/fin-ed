@@ -5,24 +5,48 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "@/contexts/UserContext";
-import { Users, GraduationCap, Baby, School } from "lucide-react";
+import { GraduationCap, Baby, Pencil, User, Briefcase, Heart, UserCheck, ArrowRight } from "lucide-react";
 
 const ageGroups = [
   {
     id: "kids",
-    title: "Kids (Ages 8-12)",
-    description: "Fun, interactive lessons about money basics",
+    title: "Kids (8-12)",
+    description: "Fun basics: saving, spending smart, and counting coins!",
     icon: Baby,
-    color: "from-blue-400 to-purple-500",
+    color: "from-pink-400 to-purple-500",
     lessons: 3,
   },
   {
     id: "teens",
-    title: "Teens (Ages 13-18)",
-    description: "Comprehensive financial education for young adults",
-    icon: School,
-    color: "from-green-400 to-blue-500",
+    title: "Teens (13-18)",
+    description: "First jobs, budgeting, and learning to manage money independently",
+    icon: Pencil,
+    color: "from-yellow-400 to-orange-500",
     lessons: 13,
+  },
+  {
+    id: "youngAdults",
+    title: "Young Adults (19-25)",
+    description: "Building credit, student loans, and making key financial decisions",
+    icon: GraduationCap,
+    color: "from-green-400 to-emerald-500",
+    lessons: 5,
+  },
+  {
+    id: "adults",
+    title: "Adults (26+)",
+    description: "Investment strategies, homeownership, and retirement planning",
+    icon: Briefcase,
+    color: "from-blue-400 to-indigo-500",
+    lessons: 5,
+  },
+  {
+    id: "seniors",
+    title: "Seniors (65+)",
+    description: "Retirement planning, estate management, and healthcare costs",
+    icon: Heart,
+    color: "from-rose-400 to-red-500",
+    lessons: 5,
   },
 ];
 
@@ -99,7 +123,7 @@ const ProfileSetup = () => {
               >
                 1
               </div>
-              <span className="ml-2 font-medium">Your Name</span>
+              <span className="ml-2 font-medium">Profile</span>
             </div>
             <div className="w-8 h-1 bg-muted rounded"></div>
             <div
@@ -123,7 +147,7 @@ const ProfileSetup = () => {
           <Card className="max-w-md mx-auto p-8 animate-fade-in">
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-primary" />
+                <User className="w-8 h-8 text-primary" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground mb-2">
                 What's your name?
@@ -194,34 +218,36 @@ const ProfileSetup = () => {
                         {group.title}
                       </h3>
 
-                      <p className="text-muted-foreground mb-4">
+                      <p className="text-muted-foreground">
                         {group.description}
                       </p>
 
-                      <div className="space-y-2">
+                      {/* <div className="space-y-2">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <GraduationCap className="w-4 h-4" />
+                          <UserCheck className="w-4 h-4" />
                           <span>Age-appropriate content</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <div className="w-4 h-4 rounded-full bg-gradient-to-r from-primary to-secondary"></div>
                           <span>Interactive lessons</span>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </Card>
                 );
               })}
             </div>
 
-            <div className="text-center space-y-3">
+            <div className="flex justify-center space-y-3">
               <Button
                 onClick={handleCompleteSetup}
                 disabled={!selectedAgeGroup}
-                className="px-8 py-3 text-lg"
+                size="lg"
                 variant="hero"
+                className="text-lg px-8 py-6 flex items-center gap-2"
               >
-                Start Learning Journey
+                Start Learning
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </div>
           </div>

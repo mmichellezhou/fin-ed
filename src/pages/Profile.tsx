@@ -110,15 +110,12 @@ const Profile = () => {
                 <h2 className="text-xl font-semibold text-foreground mb-2">
                   {userProfile.name}
                 </h2>
-                <p className="text-muted-foreground mb-4">
-                  {userProfile.ageGroup} Learner
-                </p>
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-center gap-2">
                     <Calendar className="w-4 h-4" />
                     <span>
-                      Current Age Group: {userProfile.currentAgeGroup}
+                      Age Group: {userProfile.currentAgeGroup}
                     </span>
                   </div>
                   <div className="flex items-center justify-center gap-2">
@@ -142,48 +139,6 @@ const Profile = () => {
                 </div>
               </div>
             </Card>
-
-            {/* Quick Stats */}
-            <Card
-              className="p-6 mt-6 animate-fade-in"
-              style={{ animationDelay: "0.1s" }}
-            >
-              <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Quick Stats
-              </h3>
-
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">
-                    Lessons Completed
-                  </span>
-                  <Badge variant="secondary">
-                    {currentProgress.completedLessons}/
-                    {currentProgress.totalLessons}
-                  </Badge>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Quizzes Passed</span>
-                  <Badge variant="secondary">
-                    {currentProgress.completedQuizzes}/
-                    {currentProgress.totalQuizzes}
-                  </Badge>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Average Score</span>
-                  <Badge variant="default" className="bg-success">
-                    {currentProgress.averageScore}%
-                  </Badge>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Learning Streak</span>
-                  <Badge variant="secondary">
-                    {currentProgress.streak} days
-                  </Badge>
-                </div>
-              </div>
-            </Card>
           </div>
 
           {/* Settings */}
@@ -197,11 +152,11 @@ const Profile = () => {
                 Account Settings
               </h3>
 
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {/* Personal Information */}
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="font-medium text-foreground">
+                    <h4 className="text-lg font-semibold text-foreground">
                       Personal Information
                     </h4>
                     <Button
@@ -214,7 +169,7 @@ const Profile = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="md:col-span-2">
-                      <Label htmlFor="name">Full Name</Label>
+                      <Label htmlFor="name" className="font-medium">Full Name</Label>
                       <Input
                         id="name"
                         value={editedName}
@@ -222,28 +177,12 @@ const Profile = () => {
                         disabled={!isEditing}
                       />
                     </div>
-                    <div className="md:col-span-2">
-                      <Label htmlFor="ageGroup">Age Group</Label>
-                      <Select
-                        value={editedAgeGroup}
-                        onValueChange={setEditedAgeGroup}
-                        disabled={!isEditing}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="kids">Kids (8-12)</SelectItem>
-                          <SelectItem value="teens">Teens (13-18)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
                   </div>
                 </div>
 
                 {/* Notification Preferences */}
                 <div>
-                  <h4 className="font-medium text-foreground mb-4">
+                  <h4 className="text-lg font-semibold text-foreground mb-4">
                     Notification Preferences
                   </h4>
                   <div className="space-y-3">
@@ -315,328 +254,56 @@ const Profile = () => {
             Age Group Management
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="font-medium text-foreground">
-                Available Age Groups
-              </h4>
-              <div className="space-y-3">
-                {/* Kids */}
+          <div className="grid grid-cols-1 gap-6">
+            {[
+              { id: "kids", label: "Kids (8-12)", desc: "Fun basics: saving, spending smart, and counting coins!" },
+              { id: "teens", label: "Teens (13-18)", desc: "First jobs, budgeting, and learning to manage money independently" },
+              { id: "youngAdults", label: "Young Adults (19-25)", desc: "Building credit, student loans, and making key financial decisions" },
+              { id: "adults", label: "Adults (26+)", desc: "Investment strategies, homeownership, and retirement planning" },
+              { id: "seniors", label: "Seniors (65+)", desc: "Retirement planning, estate management, and healthcare costs" },
+            ].map((group) => {
+              const isCompleted = userProfile.completedAgeGroups.includes(group.id);
+              const isCurrent = userProfile.currentAgeGroup === group.id;
+              let badgeText = "To Do";
+              let badgeClass = "bg-primary text-white";
+              if (isCompleted) {
+                badgeText = "Completed";
+                badgeClass = "bg-success text-white";
+              } else if (isCurrent) {
+                badgeText = "In Progress";
+                badgeClass = "bg-warning text-white";
+              }
+              return (
                 <div
-                  className={`p-4 rounded-lg border ${
-                    userProfile.currentAgeGroup === "kids"
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-muted/30"
-                  }`}
+                  key={group.id}
+                  className={`flex items-center justify-between p-4 rounded-lg border h-full ${isCurrent ? "border-primary bg-primary/10" : "border-border bg-muted/30"}`}
                 >
-                  <div className="flex items-center justify-between">
                     <div>
-                      <h5 className="font-medium text-foreground">
-                        Kids (8-12)
-                      </h5>
-                      <p className="text-sm text-muted-foreground">
-                        Fun basics: saving, spending smart, and counting coins!
-                      </p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h5 className="font-medium text-foreground mb-0">{group.label}</h5>
+                      <Badge className={badgeClass}>{badgeText}</Badge>
                     </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={
-                          userProfile.currentAgeGroup === "kids"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {userProfile.currentAgeGroup === "kids"
-                          ? "Current"
-                          : "Available"}
-                      </Badge>
-                      {userProfile.completedAgeGroups.includes("kids") && (
-                        <Badge variant="default" className="ml-2 bg-success">
-                          Completed
-                        </Badge>
-                      )}
-                    </div>
+                    <p className="text-sm text-muted-foreground">{group.desc}</p>
                   </div>
-                  {userProfile.currentAgeGroup !== "kids" && (
+                  {!isCurrent && (
                     <Button
                       onClick={() => {
                         const updatedProfile = {
                           ...userProfile,
-                          currentAgeGroup: "kids",
+                          currentAgeGroup: group.id,
                         };
                         setUserProfile(updatedProfile);
-                        navigate("/lessons/kids");
+                        // Removed navigation to lessons page
                       }}
                       variant="outline"
                       size="sm"
-                      className="mt-3"
                     >
-                      Switch to Kids
+                      Switch
                     </Button>
                   )}
                 </div>
-                {/* Teens */}
-                <div
-                  className={`p-4 rounded-lg border ${
-                    userProfile.currentAgeGroup === "teens"
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-muted/30"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h5 className="font-medium text-foreground">
-                        Teens (13-18)
-                      </h5>
-                      <p className="text-sm text-muted-foreground">
-                        First jobs, budgeting, and learning to manage money
-                        independently
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={
-                          userProfile.currentAgeGroup === "teens"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {userProfile.currentAgeGroup === "teens"
-                          ? "Current"
-                          : "Available"}
-                      </Badge>
-                      {userProfile.completedAgeGroups.includes("teens") && (
-                        <Badge variant="default" className="ml-2 bg-success">
-                          Completed
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  {userProfile.currentAgeGroup !== "teens" && (
-                    <Button
-                      onClick={() => {
-                        const updatedProfile = {
-                          ...userProfile,
-                          currentAgeGroup: "teens",
-                        };
-                        setUserProfile(updatedProfile);
-                        navigate("/lessons/teens");
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="mt-3"
-                    >
-                      Switch to Teens
-                    </Button>
-                  )}
-                </div>
-                {/* Young Adults */}
-                <div
-                  className={`p-4 rounded-lg border ${
-                    userProfile.currentAgeGroup === "youngAdults"
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-muted/30"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h5 className="font-medium text-foreground">
-                        Young Adults (19-25)
-                      </h5>
-                      <p className="text-sm text-muted-foreground">
-                        Building credit, student loans, and making key financial
-                        decisions
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={
-                          userProfile.currentAgeGroup === "youngAdults"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {userProfile.currentAgeGroup === "youngAdults"
-                          ? "Current"
-                          : "Available"}
-                      </Badge>
-                      {userProfile.completedAgeGroups.includes(
-                        "youngAdults"
-                      ) && (
-                        <Badge variant="default" className="ml-2 bg-success">
-                          Completed
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  {userProfile.currentAgeGroup !== "youngAdults" && (
-                    <Button
-                      onClick={() => {
-                        const updatedProfile = {
-                          ...userProfile,
-                          currentAgeGroup: "youngAdults",
-                        };
-                        setUserProfile(updatedProfile);
-                        navigate("/lessons/youngAdults");
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="mt-3"
-                    >
-                      Switch to Young Adults
-                    </Button>
-                  )}
-                </div>
-                {/* Adults */}
-                <div
-                  className={`p-4 rounded-lg border ${
-                    userProfile.currentAgeGroup === "adults"
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-muted/30"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h5 className="font-medium text-foreground">
-                        Adults (26+)
-                      </h5>
-                      <p className="text-sm text-muted-foreground">
-                        Investment strategies, homeownership, and retirement
-                        planning
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={
-                          userProfile.currentAgeGroup === "adults"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {userProfile.currentAgeGroup === "adults"
-                          ? "Current"
-                          : "Available"}
-                      </Badge>
-                      {userProfile.completedAgeGroups.includes("adults") && (
-                        <Badge variant="default" className="ml-2 bg-success">
-                          Completed
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  {userProfile.currentAgeGroup !== "adults" && (
-                    <Button
-                      onClick={() => {
-                        const updatedProfile = {
-                          ...userProfile,
-                          currentAgeGroup: "adults",
-                        };
-                        setUserProfile(updatedProfile);
-                        navigate("/lessons/adults");
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="mt-3"
-                    >
-                      Switch to Adults
-                    </Button>
-                  )}
-                </div>
-                {/* Seniors */}
-                <div
-                  className={`p-4 rounded-lg border ${
-                    userProfile.currentAgeGroup === "seniors"
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-muted/30"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h5 className="font-medium text-foreground">
-                        Seniors (65+)
-                      </h5>
-                      <p className="text-sm text-muted-foreground">
-                        Retirement planning, estate management, and healthcare
-                        costs
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <Badge
-                        variant={
-                          userProfile.currentAgeGroup === "seniors"
-                            ? "default"
-                            : "secondary"
-                        }
-                      >
-                        {userProfile.currentAgeGroup === "seniors"
-                          ? "Current"
-                          : "Available"}
-                      </Badge>
-                      {userProfile.completedAgeGroups.includes("seniors") && (
-                        <Badge variant="default" className="ml-2 bg-success">
-                          Completed
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  {userProfile.currentAgeGroup !== "seniors" && (
-                    <Button
-                      onClick={() => {
-                        const updatedProfile = {
-                          ...userProfile,
-                          currentAgeGroup: "seniors",
-                        };
-                        setUserProfile(updatedProfile);
-                        navigate("/lessons/seniors");
-                      }}
-                      variant="outline"
-                      size="sm"
-                      className="mt-3"
-                    >
-                      Switch to Seniors
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-medium text-foreground">Progress Summary</h4>
-              <div className="space-y-3">
-                <div className="p-4 rounded-lg bg-muted/30">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">
-                      Current Age Group
-                    </span>
-                    <Badge variant="default">
-                      {userProfile.currentAgeGroup}
-                    </Badge>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    You're currently learning in the{" "}
-                    {userProfile.currentAgeGroup} age group
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-lg bg-success/10 border-success/20">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">
-                      Completed Age Groups
-                    </span>
-                    <Badge variant="default" className="bg-success">
-                      {userProfile.completedAgeGroups.length}
-                    </Badge>
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    {userProfile.completedAgeGroups.length > 0
-                      ? `You've completed: ${userProfile.completedAgeGroups.join(
-                          ", "
-                        )}`
-                      : "No age groups completed yet"}
-                  </div>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </Card>
       </div>
