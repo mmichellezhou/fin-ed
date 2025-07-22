@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import { lessonsData } from "./LessonViewer";
+import { lessonsData, formatAgeGroupLabel } from "./LessonViewer";
 
 const Dashboard = () => {
   const { userProfile, isAgeGroupCompleted } = useUser();
@@ -62,7 +62,7 @@ const Dashboard = () => {
             </h1>
           </div>
           <p className="text-xl text-muted-foreground">
-            Track your progress in {userProfile.currentAgeGroup} lessons
+            Track your progress in {formatAgeGroupLabel(userProfile.currentAgeGroup)} Lessons
           </p>
         </div>
 
