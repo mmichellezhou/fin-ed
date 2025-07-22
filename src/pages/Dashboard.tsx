@@ -4,17 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Trophy,
-  Award,
-  Star,
   BookOpen,
   Target,
   TrendingUp,
   ArrowRight,
-  Users,
-  BarChart3,
+  PieChart,
+  Medal,
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { lessonsData } from "./LessonViewer";
 
 const Dashboard = () => {
   const { userProfile, isAgeGroupCompleted } = useUser();
@@ -39,20 +38,16 @@ const Dashboard = () => {
     );
   }
 
-  const currentProgress = userProfile.progress[userProfile.currentAgeGroup] || {
-    completedLessons: 0,
-    totalLessons: 0,
-    completedQuizzes: 0,
-    totalQuizzes: 0,
-    averageScore: 0,
-    streak: 0,
-    lastActivity: new Date().toISOString(),
-  };
-
-  const overallProgress =
-    currentProgress.totalLessons > 0
-      ? (currentProgress.completedLessons / currentProgress.totalLessons) * 100
-      : 0;
+  // Calculate completed lessons for the current age group
+  const currentLessons = lessonsData[userProfile.currentAgeGroup] || [];
+  const completedLessonsCount = currentLessons.filter((lesson) => {
+    if (!lesson.videos || lesson.videos.length === 0) return false;
+    const videoProgress = userProfile.progress[userProfile.currentAgeGroup]?.videoProgress?.[lesson.id] || {};
+    const completedVideos = Object.values(videoProgress).filter(Boolean).length;
+    return completedVideos === lesson.videos.length && lesson.videos.length > 0;
+  }).length;
+  const totalLessonsCount = currentLessons.length;
+  const overallProgress = totalLessonsCount > 0 ? (completedLessonsCount / totalLessonsCount) * 100 : 0;
 
   const earnedBadges = userProfile.badges.filter((badge) => badge.earned);
 
@@ -83,13 +78,12 @@ const Dashboard = () => {
                   Lessons Completed
                 </p>
                 <p className="text-2xl font-bold text-foreground">
-                  {currentProgress.completedLessons}/
-                  {currentProgress.totalLessons}
+                  {completedLessonsCount}/{totalLessonsCount}
                 </p>
               </div>
               <BookOpen className="w-8 h-8 text-primary" />
             </div>
-            <Progress value={overallProgress} className="mt-3" />
+            <Progress value={overallProgress} className="mt-3 bg-gradient-to-r from-primary to-secondary" />
           </Card>
 
           <Card
@@ -100,13 +94,13 @@ const Dashboard = () => {
               <div>
                 <p className="text-sm text-muted-foreground">Quiz Average</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {currentProgress.averageScore}%
+                  {userProfile.progress[userProfile.currentAgeGroup]?.averageScore || 0}%
                 </p>
               </div>
               <Target className="w-8 h-8 text-success" />
             </div>
             <div className="mt-3 text-xs text-muted-foreground">
-              {currentProgress.completedQuizzes} quizzes completed
+              {userProfile.progress[userProfile.currentAgeGroup]?.completedQuizzes || 0} quizzes completed
             </div>
           </Card>
 
@@ -118,12 +112,12 @@ const Dashboard = () => {
               <div>
                 <p className="text-sm text-muted-foreground">Learning Streak</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {currentProgress.streak} days
+                  {userProfile.progress[userProfile.currentAgeGroup]?.streak || 0} days
                 </p>
               </div>
               <TrendingUp className="w-8 h-8 text-red-500" />
             </div>
-            <div className="mt-3 text-xs text-success">Keep it up!</div>
+            <div className="mt-3 text-xs text-muted-foreground">{userProfile.progress[userProfile.currentAgeGroup]?.streak || 0} days max</div>
           </Card>
 
           <Card
@@ -137,7 +131,7 @@ const Dashboard = () => {
                   {earnedBadges.length}/{userProfile.badges.length}
                 </p>
               </div>
-              <Trophy className="w-8 h-8 text-warning" />
+              <Medal className="w-8 h-8 text-warning" />
             </div>
             <div className="mt-3 text-xs text-muted-foreground">
               {userProfile.badges.length - earnedBadges.length} more to unlock
@@ -152,10 +146,9 @@ const Dashboard = () => {
             style={{ animationDelay: "0.5s" }}
           >
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <BarChart3 className="w-5 h-5" />
+              <PieChart className="w-5 h-5" />
               Progress by Category
             </h2>
-
             <div className="space-y-4">
               <div className="text-center py-8">
                 <p className="text-muted-foreground">
@@ -171,7 +164,7 @@ const Dashboard = () => {
             style={{ animationDelay: "0.6s" }}
           >
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-warning" />
+              <Trophy className="w-5 h-5 text-black" />
               Achievements
             </h2>
 

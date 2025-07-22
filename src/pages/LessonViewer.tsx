@@ -34,7 +34,7 @@ import {
 import LessonDetailsDialog from "@/components/LessonDetailsDialog";
 // future consideration: automating categorization based on title/video, default linking 'image' to category
 // Mock lesson data
-const lessonsData = {
+export const lessonsData = {
   kids: [
     {
       id: 1,
