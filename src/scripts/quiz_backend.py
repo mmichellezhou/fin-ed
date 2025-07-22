@@ -1,10 +1,8 @@
-# quiz_backend.py
-# FastAPI backend to generate quiz questions from transcript text using OpenAI API
-#
-# Usage:
-# 1. Install dependencies: pip install fastapi uvicorn openai python-dotenv
-# 2. Set your OpenAI API key in a .env file: OPENAI_API_KEY=your-key-here
-# 3. Run: uvicorn quiz_backend:app --reload
+# uses fast api to generate quiz questions from a transcript
+# uses localai to generate the quiz questions
+# uses pydantic to define the request and response
+# uses requests to make the api call to localai
+# uses fastapi to run the api
 
 import requests
 from fastapi import FastAPI, HTTPException
