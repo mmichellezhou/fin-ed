@@ -670,7 +670,7 @@ function parseDurationToMinutes(duration: string): number {
 }
 
 // Helper to format age group label
-function formatAgeGroupLabel(ageGroup: string | undefined) {
+export function formatAgeGroupLabel(ageGroup: string | undefined) {
   if (!ageGroup) return '';
   // Insert space before capital letters (except the first), then capitalize each word
   return ageGroup
