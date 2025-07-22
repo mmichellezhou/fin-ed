@@ -31,6 +31,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import LessonDetailsDialog from "@/components/LessonDetailsDialog";
 // future consideration: automating categorization based on title/video, default linking 'image' to category
 // Mock lesson data
 const lessonsData = {
@@ -128,7 +129,7 @@ const lessonsData = {
       description:
         "Covers the basics of checking and savings accounts, how they work, and why they’re important for managing money.",
       image: "💰",
-      completed: true,
+      completed: false,
       starred: true,
       duration: "6 min",
       videos: [
@@ -1026,65 +1027,23 @@ const LessonViewer = () => {
                         <BookOpen className="w-3 h-3" />
                         {lesson.duration}
                       </span>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setSelectedLesson(lesson)}
-                          >
-                            View Details
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-lg">
-                          <DialogHeader>
-                            <DialogTitle className="flex items-center gap-2">
-                              <span className="text-2xl">{lesson.image}</span>
-                              {lesson.title}
-                            </DialogTitle>
-                          </DialogHeader>
-                          <div className="space-y-4">
-                            <p className="text-muted-foreground">
-                              {lesson.description}
-                            </p>
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <BookOpen className="w-4 h-4" />
-                                {lesson.duration}
-                              </span>
-                              <Badge
-                                className={
-                                  categoryColors[lesson.category] || ""
-                                }
-                              >
-                                {
-                                  categories[
-                                    lesson.category as keyof typeof categories
-                                  ]
-                                }
-                              </Badge>
-                            </div>
-                            <div className="flex gap-2 pt-4">
-                              <StartLessonButton
-                                videos={lesson.videos}
-                                lessonId={lesson.id}
-                                ageGroup={ageGroup || ""}
-                                onStart={() => startLesson(lesson)}
-                              />
-                              {isLessonCompleted(lesson) && (
-                                <Button
-                                  onClick={() => goToQuiz(lesson)}
-                                  variant="success"
-                                  size="default"
-                                >
-                                  <Target className="w-4 h-4" />
-                                  Take Quiz
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
+                      <LessonDetailsDialog
+                        lesson={lesson}
+                        ageGroup={ageGroup || ""}
+                        isLessonCompleted={isLessonCompleted}
+                        goToQuiz={goToQuiz}
+                        startLesson={startLesson}
+                        categoryColors={categoryColors}
+                        categories={categories}
+                      >
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setSelectedLesson(lesson)}
+                        >
+                          View Details
+                        </Button>
+                      </LessonDetailsDialog>
                     </div>
                   </div>
                 </Card>
