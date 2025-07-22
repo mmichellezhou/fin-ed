@@ -21,9 +21,16 @@ import {
   BookOpen,
   Target,
   ArrowRight,
+  GraduationCap,
+  Baby,
+  Pencil,
+  Briefcase,
+  Heart,
+  Image as ImageIcon,
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const Profile = () => {
   const { userProfile, setUserProfile } = useUser();
@@ -33,6 +40,8 @@ const Profile = () => {
   const [editedAgeGroup, setEditedAgeGroup] = useState(
     userProfile?.ageGroup || ""
   );
+  const [profileImage, setProfileImage] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!userProfile) {
     return (
@@ -75,6 +84,18 @@ const Profile = () => {
     }
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        setProfileImage(result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -100,11 +121,28 @@ const Profile = () => {
           <div className="lg:col-span-1">
             <Card className="p-6 animate-fade-in">
               <div className="text-center">
-                <Avatar className="w-24 h-24 mx-auto mb-4">
-                  <AvatarImage src="/placeholder.svg" />
-                  <AvatarFallback className="text-xl">
-                    {getInitials(userProfile.name)}
-                  </AvatarFallback>
+                <Avatar className="w-24 h-24 mx-auto mb-4 cursor-pointer group relative" onClick={() => fileInputRef.current?.click()}>
+                  {profileImage ? (
+                    <AvatarImage src={profileImage} />
+                  ) : (
+                    <>
+                      <AvatarImage src="/placeholder.svg" />
+                      <AvatarFallback className="text-xl">
+                        {getInitials(userProfile.name)}
+                      </AvatarFallback>
+                    </>
+                  )}
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-full">
+                    <ImageIcon className="w-10 h-10 text-white opacity-90" />
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
+                  />
                 </Avatar>
 
                 <h2 className="text-xl font-semibold text-foreground mb-2">
@@ -113,27 +151,19 @@ const Profile = () => {
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      Age Group: {userProfile.currentAgeGroup}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-center gap-2">
-                    <Users className="w-4 h-4" />
+                    <span>Age Group:</span>
                     <span>
                       {userProfile.ageGroup === "kids"
                         ? "Kids (8-12)"
-                        : "Teens (13-18)"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-center gap-2">
-                    <BookOpen className="w-4 h-4" />
-                    <span>
-                      {userProfile.completedAgeGroups.length > 0
-                        ? `${userProfile.completedAgeGroups.length} age group${
-                            userProfile.completedAgeGroups.length > 1 ? "s" : ""
-                          } completed`
-                        : "No age groups completed yet"}
+                        : userProfile.ageGroup === "teens"
+                        ? "Teens (13-18)"
+                        : userProfile.ageGroup === "youngAdults"
+                        ? "Young Adults (19-25)"
+                        : userProfile.ageGroup === "adults"
+                        ? "Adults (26+)"
+                        : userProfile.ageGroup === "seniors"
+                        ? "Seniors (65+)"
+                        : userProfile.ageGroup}
                     </span>
                   </div>
                 </div>
@@ -264,12 +294,13 @@ const Profile = () => {
             ].map((group) => {
               const isCompleted = userProfile.completedAgeGroups.includes(group.id);
               const isCurrent = userProfile.currentAgeGroup === group.id;
+              const groupProgress = userProfile.progress[group.id];
               let badgeText = "To Do";
               let badgeClass = "bg-primary text-white";
               if (isCompleted) {
                 badgeText = "Completed";
                 badgeClass = "bg-success text-white";
-              } else if (isCurrent) {
+              } else if (groupProgress && groupProgress.completedLessons > 0) {
                 badgeText = "In Progress";
                 badgeClass = "bg-warning text-white";
               }
@@ -281,7 +312,7 @@ const Profile = () => {
                     <div>
                     <div className="flex items-center gap-2 mb-1">
                       <h5 className="font-medium text-foreground mb-0">{group.label}</h5>
-                      <Badge className={badgeClass}>{badgeText}</Badge>
+                      <Badge className={badgeClass + " pointer-events-none select-none"}>{badgeText}</Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">{group.desc}</p>
                   </div>

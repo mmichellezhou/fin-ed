@@ -11,6 +11,7 @@ import {
   TrendingUp,
   ArrowRight,
   Users,
+  BarChart3,
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +62,6 @@ const Dashboard = () => {
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Users className="w-8 h-8 text-primary" />
             <h1 className="text-4xl font-playfair font-bold text-foreground">
               Welcome back, {userProfile.name}!
             </h1>
@@ -152,7 +152,7 @@ const Dashboard = () => {
             style={{ animationDelay: "0.5s" }}
           >
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <BookOpen className="w-5 h-5" />
+              <BarChart3 className="w-5 h-5" />
               Progress by Category
             </h2>
 
@@ -171,7 +171,7 @@ const Dashboard = () => {
             style={{ animationDelay: "0.6s" }}
           >
             <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-              <Award className="w-5 h-5" />
+              <Trophy className="w-5 h-5 text-warning" />
               Achievements
             </h2>
 

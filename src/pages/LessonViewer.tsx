@@ -735,8 +735,11 @@ const LessonViewer = () => {
     // Completion filter
     if (completionFilter) {
       filtered = filtered.filter((lesson) => {
-        if (completionFilter === "todo") return !isLessonCompleted(lesson) && !(lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0));
-        if (completionFilter === "inprogress") return !isLessonCompleted(lesson) && lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0);
+        if (completionFilter === "todo") return !isLessonCompleted(lesson) && getLessonVideoProgress(ageGroup || "", lesson.id, lesson.videos?.length || 0).completed === 0;
+        if (completionFilter === "inprogress") {
+          const videoProgress = getLessonVideoProgress(ageGroup || "", lesson.id, lesson.videos?.length || 0);
+          return !isLessonCompleted(lesson) && videoProgress.completed > 0;
+        }
         if (completionFilter === "completed") return isLessonCompleted(lesson);
         return true;
       });
@@ -797,12 +800,21 @@ const LessonViewer = () => {
 
   // Helper for lesson status badge
   const getLessonStatus = (lesson: any) => {
-    if (isLessonCompleted(lesson)) return { text: "Completed", className: "bg-success text-white" };
-    // Check for in progress: if any video has progress > 0
-    if (lesson.videos && lesson.videos.some((v: any) => v.progress && v.progress > 0)) {
-      return { text: "In Progress", className: "bg-warning text-white" };
+    if (!lesson.videos || lesson.videos.length === 0) {
+      return { text: "To Do", className: "bg-primary text-white" };
     }
-    return { text: "To Do", className: "bg-primary text-white" };
+    const videoProgress = getLessonVideoProgress(
+      ageGroup || "",
+      lesson.id,
+      lesson.videos.length
+    );
+    if (videoProgress.completed === videoProgress.total && videoProgress.total > 0) {
+      return { text: "Completed", className: "bg-success text-white" };
+    } else if (videoProgress.completed > 0) {
+      return { text: "In Progress", className: "bg-warning text-white" };
+    } else {
+      return { text: "To Do", className: "bg-primary text-white" };
+    }
   };
 
   const completedCount = lessons.filter((l) => isLessonCompleted(l)).length;
