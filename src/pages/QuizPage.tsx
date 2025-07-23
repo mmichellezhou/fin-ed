@@ -8,13 +8,13 @@ import {
   XCircle,
   Trophy,
   Clock,
-  AlertCircle,
   ClipboardList,
+  ArrowRight,
 } from "lucide-react";
 import { useEffect } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { lessonsData } from "./LessonViewer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { capitalizeFirst, formatAgeGroupLabel } from "@/lib/utils";
 
 // Quiz data
@@ -2099,6 +2099,8 @@ const QuizPage = () => {
   });
 
   const location = useLocation();
+  const navigate = useNavigate();
+
   // Get lesson title from query string
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -2268,6 +2270,25 @@ const QuizPage = () => {
     }
     // eslint-disable-next-line
   }, [lessons, quizList, currentAgeGroup]);
+
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-accent/20 py-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-playfair font-bold text-foreground mb-4">
+            Quizzes Not Found
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8">
+            Please set up your profile to continue
+          </p>
+          <Button onClick={() => navigate("/setup")} variant="hero" size="lg">
+            Set Up Profile
+            <ArrowRight className="w-5 h-5 ml-2" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (selectedQuiz && quizStarted) {
     const currentQ = selectedQuiz.questions[currentQuestion];

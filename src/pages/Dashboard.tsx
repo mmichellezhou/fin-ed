@@ -25,13 +25,13 @@ const Dashboard = () => {
       <div className="min-h-screen bg-gradient-to-br from-background to-accent/20 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-playfair font-bold text-foreground mb-4">
-            Welcome to FinEd!
+            Dashboard Not Found
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Let's get started with your financial education journey
+            Please set up your profile to continue
           </p>
           <Button onClick={() => navigate("/setup")} variant="hero" size="lg">
-            Set Up Your Profile
+            Set Up Profile
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
         </div>
