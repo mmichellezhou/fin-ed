@@ -40,7 +40,9 @@ const Profile = () => {
   const [editedAgeGroup, setEditedAgeGroup] = useState(
     userProfile?.ageGroup || ""
   );
-  const [profileImage, setProfileImage] = useState(userProfile?.profileImage || "");
+  const [profileImage, setProfileImage] = useState(
+    userProfile?.profileImage || ""
+  );
   const [editedEmail, setEditedEmail] = useState(userProfile?.email || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -124,7 +126,10 @@ const Profile = () => {
           <div className="lg:col-span-1">
             <Card className="p-6 animate-fade-in">
               <div className="text-center">
-                <Avatar className="w-24 h-24 mx-auto mb-4 cursor-pointer group relative" onClick={() => fileInputRef.current?.click()}>
+                <Avatar
+                  className="w-24 h-24 mx-auto mb-4 cursor-pointer group relative"
+                  onClick={() => fileInputRef.current?.click()}
+                >
                   {userProfile.profileImage ? (
                     <AvatarImage src={userProfile.profileImage} />
                   ) : (
@@ -159,17 +164,23 @@ const Profile = () => {
                 <div className="space-y-2 text-sm mt-2">
                   <div className="flex items-center justify-center gap-2">
                     <span>
-                      {userProfile.ageGroup === "kids"
-                        ? "Kid (8-12)"
-                        : userProfile.ageGroup === "teens"
-                        ? "Teen (13-18)"
-                        : userProfile.ageGroup === "youngAdults"
-                        ? "Young Adult (19-25)"
-                        : userProfile.ageGroup === "adults"
-                        ? "Adult (26+)"
-                        : userProfile.ageGroup === "seniors"
-                        ? "Senior (65+)"
-                        : userProfile.ageGroup}
+                      {(() => {
+                        const groupId = userProfile.currentAgeGroup;
+                        switch (groupId) {
+                          case "kids":
+                            return "Kid (8-12)";
+                          case "teens":
+                            return "Teen (13-18)";
+                          case "youngAdults":
+                            return "Young Adult (19-25)";
+                          case "adults":
+                            return "Adult (26+)";
+                          case "seniors":
+                            return "Senior (65+)";
+                          default:
+                            return groupId;
+                        }
+                      })()}
                     </span>
                   </div>
                 </div>
@@ -205,7 +216,9 @@ const Profile = () => {
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="md:col-span-2">
-                      <Label htmlFor="name" className="font-medium">Full Name</Label>
+                      <Label htmlFor="name" className="font-medium">
+                        Full Name
+                      </Label>
                       <Input
                         id="name"
                         value={editedName}
@@ -214,7 +227,9 @@ const Profile = () => {
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <Label htmlFor="email" className="font-medium">Email</Label>
+                      <Label htmlFor="email" className="font-medium">
+                        Email
+                      </Label>
                       <Input
                         id="email"
                         type="email"
@@ -302,13 +317,35 @@ const Profile = () => {
 
           <div className="grid grid-cols-1 gap-6">
             {[
-              { id: "kids", label: "Kids (8-12)", desc: "Fun basics: saving, spending smart, and counting coins!" },
-              { id: "teens", label: "Teens (13-18)", desc: "First jobs, budgeting, and learning to manage money independently" },
-              { id: "youngAdults", label: "Young Adults (19-25)", desc: "Building credit, student loans, and making key financial decisions" },
-              { id: "adults", label: "Adults (26+)", desc: "Investment strategies, homeownership, and retirement planning" },
-              { id: "seniors", label: "Seniors (65+)", desc: "Retirement planning, estate management, and healthcare costs" },
+              {
+                id: "kids",
+                label: "Kids (8-12)",
+                desc: "Fun basics: saving, spending smart, and counting coins!",
+              },
+              {
+                id: "teens",
+                label: "Teens (13-18)",
+                desc: "First jobs, budgeting, and learning to manage money independently",
+              },
+              {
+                id: "youngAdults",
+                label: "Young Adults (19-25)",
+                desc: "Building credit, student loans, and making key financial decisions",
+              },
+              {
+                id: "adults",
+                label: "Adults (26+)",
+                desc: "Investment strategies, homeownership, and retirement planning",
+              },
+              {
+                id: "seniors",
+                label: "Seniors (65+)",
+                desc: "Retirement planning, estate management, and healthcare costs",
+              },
             ].map((group) => {
-              const isCompleted = userProfile.completedAgeGroups.includes(group.id);
+              const isCompleted = userProfile.completedAgeGroups.includes(
+                group.id
+              );
               const isCurrent = userProfile.currentAgeGroup === group.id;
               const groupProgress = userProfile.progress[group.id];
               let badgeText = "To Do";
@@ -323,14 +360,28 @@ const Profile = () => {
               return (
                 <div
                   key={group.id}
-                  className={`flex items-center justify-between p-4 rounded-lg border h-full ${isCurrent ? "border-primary bg-primary/10" : "border-border bg-muted/30"}`}
+                  className={`flex items-center justify-between p-4 rounded-lg border h-full ${
+                    isCurrent
+                      ? "border-primary bg-primary/10"
+                      : "border-border bg-muted/30"
+                  }`}
                 >
-                    <div>
+                  <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h5 className="font-medium text-foreground mb-0">{group.label}</h5>
-                      <Badge className={badgeClass + " pointer-events-none select-none"}>{badgeText}</Badge>
+                      <h5 className="font-medium text-foreground mb-0">
+                        {group.label}
+                      </h5>
+                      <Badge
+                        className={
+                          badgeClass + " pointer-events-none select-none"
+                        }
+                      >
+                        {badgeText}
+                      </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">{group.desc}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {group.desc}
+                    </p>
                   </div>
                   {!isCurrent && (
                     <Button
