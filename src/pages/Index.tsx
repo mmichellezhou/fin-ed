@@ -18,13 +18,6 @@ const Index = () => {
   const navigate = useNavigate();
   const { userProfile } = useUser();
 
-  // Redirect to setup if no user profile exists
-  useEffect(() => {
-    if (!userProfile) {
-      navigate("/setup");
-    }
-  }, [userProfile, navigate]);
-
   const features = [
     {
       icon: BookOpen,
