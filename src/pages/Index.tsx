@@ -62,7 +62,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background via-accent/10 to-primary/5 py-16 lg:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-accent/5 py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center animate-fade-in">
             <h1 className="text-5xl lg:text-7xl font-playfair font-bold text-foreground mb-6">
@@ -109,6 +109,7 @@ const Index = () => {
         </div>
 
         {/* Floating decorative elements */}
+        {/*
         <div className="absolute top-20 left-10 w-16 h-16 bg-primary/10 rounded-full float-animation" />
         <div
           className="absolute top-40 right-16 w-12 h-12 bg-secondary/10 rounded-full float-animation"
@@ -118,10 +119,11 @@ const Index = () => {
           className="absolute bottom-20 left-1/4 w-8 h-8 bg-warning/10 rounded-full float-animation"
           style={{ animationDelay: "2s" }}
         />
+        */}
       </section>
 
       {/* Features Section */}
-      <section className="py-16 lg:py-24 bg-background">
+      <section className="py-6 lg:py-8 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl lg:text-4xl font-playfair font-bold text-foreground mb-4">
@@ -159,7 +161,7 @@ const Index = () => {
       </section>
 
       {/* Impact Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-background to-success/10">
+      <section className="py-16 lg:py-24 bg-gradient-to-b from-accent/5 to-secondary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center animate-fade-in">
             <h2 className="text-3xl lg:text-4xl font-playfair font-bold text-foreground mb-6">

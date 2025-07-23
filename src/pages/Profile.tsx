@@ -40,7 +40,8 @@ const Profile = () => {
   const [editedAgeGroup, setEditedAgeGroup] = useState(
     userProfile?.ageGroup || ""
   );
-  const [profileImage, setProfileImage] = useState("");
+  const [profileImage, setProfileImage] = useState(userProfile?.profileImage || "");
+  const [editedEmail, setEditedEmail] = useState(userProfile?.email || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   if (!userProfile) {
@@ -78,6 +79,7 @@ const Profile = () => {
         ...userProfile,
         name: editedName.trim(),
         ageGroup: editedAgeGroup,
+        email: editedEmail.trim(),
       };
       setUserProfile(updatedProfile);
       setIsEditing(false);
@@ -91,6 +93,7 @@ const Profile = () => {
       reader.onload = (event) => {
         const result = event.target?.result as string;
         setProfileImage(result);
+        setUserProfile({ ...userProfile, profileImage: result });
       };
       reader.readAsDataURL(file);
     }
@@ -122,15 +125,12 @@ const Profile = () => {
             <Card className="p-6 animate-fade-in">
               <div className="text-center">
                 <Avatar className="w-24 h-24 mx-auto mb-4 cursor-pointer group relative" onClick={() => fileInputRef.current?.click()}>
-                  {profileImage ? (
-                    <AvatarImage src={profileImage} />
+                  {userProfile.profileImage ? (
+                    <AvatarImage src={userProfile.profileImage} />
                   ) : (
-                    <>
-                      <AvatarImage src="/placeholder.svg" />
-                      <AvatarFallback className="text-xl">
-                        {getInitials(userProfile.name)}
-                      </AvatarFallback>
-                    </>
+                    <AvatarFallback className="text-xl">
+                      {getInitials(userProfile.name)}
+                    </AvatarFallback>
                   )}
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-full">
@@ -145,24 +145,30 @@ const Profile = () => {
                   />
                 </Avatar>
 
-                <h2 className="text-xl font-semibold text-foreground mb-2">
+                <h2 className="text-xl font-semibold text-foreground">
                   {userProfile.name}
                 </h2>
 
-                <div className="space-y-2 text-sm">
+                {/* Show email in profile info if present */}
+                {userProfile.email && (
+                  <div className="text-muted-foreground text-sm">
+                    {userProfile.email}
+                  </div>
+                )}
+
+                <div className="space-y-2 text-sm mt-2">
                   <div className="flex items-center justify-center gap-2">
-                    <span>Age Group:</span>
                     <span>
                       {userProfile.ageGroup === "kids"
-                        ? "Kids (8-12)"
+                        ? "Kid (8-12)"
                         : userProfile.ageGroup === "teens"
-                        ? "Teens (13-18)"
+                        ? "Teen (13-18)"
                         : userProfile.ageGroup === "youngAdults"
-                        ? "Young Adults (19-25)"
+                        ? "Young Adult (19-25)"
                         : userProfile.ageGroup === "adults"
-                        ? "Adults (26+)"
+                        ? "Adult (26+)"
                         : userProfile.ageGroup === "seniors"
-                        ? "Seniors (65+)"
+                        ? "Senior (65+)"
                         : userProfile.ageGroup}
                     </span>
                   </div>
@@ -204,6 +210,16 @@ const Profile = () => {
                         id="name"
                         value={editedName}
                         onChange={(e) => setEditedName(e.target.value)}
+                        disabled={!isEditing}
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <Label htmlFor="email" className="font-medium">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={editedEmail}
+                        onChange={(e) => setEditedEmail(e.target.value)}
                         disabled={!isEditing}
                       />
                     </div>

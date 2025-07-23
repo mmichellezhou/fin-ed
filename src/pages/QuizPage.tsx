@@ -14,13 +14,16 @@ import {
 import { useEffect } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { lessonsData } from "./LessonViewer";
+import { useLocation } from "react-router-dom";
+import { capitalizeFirst, formatAgeGroupLabel } from "@/lib/utils";
 
 // Quiz data
 const quizzes = [
   {
-    id: 4,
+    id: 1,
     title: "Understanding Your Relationship with Money Quiz",
     lessonTitle: "Understanding Your Relationship with Money",
+    category: "basics",
     completed: false,
     score: null,
     questions: [
@@ -94,9 +97,10 @@ const quizzes = [
     ],
   },
   {
-    id: 5,
+    id: 2,
     title: "Budgeting Basics Quiz",
     lessonTitle: "Budgeting Basics",
+    category: "budgeting",
     completed: false,
     score: null,
     questions: [
@@ -165,9 +169,10 @@ const quizzes = [
     ],
   },
   {
-    id: 6,
+    id: 3,
     title: "Banking & How to Use It Quiz",
     lessonTitle: "Banking & How to Use It",
+    category: "basics",
     completed: false,
     score: null,
     questions: [
@@ -239,9 +244,10 @@ const quizzes = [
     ],
   },
   {
-    id: 7,
+    id: 4,
     title: "Saving & Emergency Funds Quiz",
     lessonTitle: "Saving and Emergency Funds",
+    category: "saving",
     completed: false,
     score: null,
     questions: [
@@ -275,9 +281,10 @@ const quizzes = [
     ],
   },
   {
-    id: 8,
+    id: 5,
     title: "Debt: Good vs. Bad Quiz",
     lessonTitle: "Debt: Good vs. Bad",
+    category: "credit",
     completed: false,
     score: null,
     questions: [
@@ -324,11 +331,13 @@ const quizzes = [
     ],
   },
   {
-    id: 9,
+    id: 6,
     title: "Credit Cards and Credit Scores Quiz",
     lessonTitle: "Credit Cards and Credit Scores",
+    category: "credit",
     completed: false,
     score: null,
+    attempts: 0,
     questions: [
       {
         id: 1,
@@ -424,9 +433,10 @@ const quizzes = [
     ],
   },
   {
-    id: 10,
+    id: 7,
     title: "Earning Income & Your First Paycheck Quiz",
     lessonTitle: "Earning Income & Your First Paycheck",
+    category: "basics",
     completed: false,
     score: null,
     questions: [
@@ -485,9 +495,10 @@ const quizzes = [
     ],
   },
   {
-    id: 11,
+    id: 8,
     title: "Taxes 101 Quiz",
     lessonTitle: "Taxes 101",
+    category: "taxes",
     completed: false,
     score: null,
     questions: [
@@ -547,9 +558,10 @@ const quizzes = [
     ],
   },
   {
-    id: 12,
+    id: 9,
     title: "Smart Spending & Consumer Awareness Quiz",
     lessonTitle: "Smart Spending & Consumer Awareness",
+    category: "budgeting",
     completed: false,
     score: null,
     questions: [
@@ -652,9 +664,10 @@ const quizzes = [
     ],
   },
   {
-    id: 13,
+    id: 10,
     title: "Intro to Investing Quiz",
     lessonTitle: "Intro to Investing",
+    category: "investing",
     completed: false,
     score: null,
     questions: [
@@ -729,9 +742,10 @@ const quizzes = [
     ],
   },
   {
-    id: 14,
+    id: 11,
     title: "Saving vs Spending Quiz",
     lessonTitle: "Saving vs Spending",
+    category: "saving",
     completed: false,
     score: null,
     questions: [
@@ -785,9 +799,10 @@ const quizzes = [
     ],
   },
   {
-    id: 15,
+    id: 12,
     title: "Earning Money Quiz",
     lessonTitle: "Earning Money",
+    category: "basics",
     completed: false,
     score: null,
     questions: [
@@ -828,9 +843,10 @@ const quizzes = [
     ],
   },
   {
-    id: 16,
+    id: 13,
     title: "Giving and Sharing Quiz",
     lessonTitle: "Giving and Sharing",
+    category: "giving",
     completed: false,
     score: null,
     questions: [
@@ -889,114 +905,10 @@ const quizzes = [
       },
     ],
   },
-  {
-    id: 17,
-    title: "Budgeting Basics Quiz",
-    lessonTitle: "Budgeting Basics",
-    completed: false,
-    score: null,
-    questions: [
-      {
-        id: 1,
-        question: "What is a budget?",
-        options: [
-          "A plan for spending all your money on fun things immediately",
-          "A plan for limiting spending on fun things to ensure enough money for necessary things or needs",
-          "A plan for saving all your money until you have enough for a big purchase",
-          "A plan for spending only on wants and not needs",
-        ],
-        correctAnswer: 1,
-        explanation:
-          "A budget is a plan for limiting spending on fun things to ensure enough money for necessary things or needs.",
-      },
-      {
-        id: 2,
-        question: "What is the 30-60-10 plan?",
-        options: [
-          "A plan for saving 30% of your income, spending 60% of your income, and sharing 10% of your income",
-          "A plan for spending 30% of your income, saving 60% of your income, and donating 10% of your income",
-          "A plan for saving 30% of your income, spending 60% of your income, and saving 10% of your income",
-          "A plan for saving 30% of your income, spending 60% of your income, and sharing 10% of your income",
-        ],
-        correctAnswer: 0,
-        explanation:
-          "The 30-60-10 plan is a plan for saving 30%, spending 60%, and sharing 10% of your income.",
-      },
-      {
-        id: 3,
-        question:
-          "What does 'sharing' mean in the context of the 30-60-10 plan?",
-        options: [
-          "Spending your money on fun things right away",
-          "Giving money to a cause you care about",
-          "Saving all of your money until you have enough for a big purchase",
-          "Spending only on wants and not needs",
-        ],
-        correctAnswer: 1,
-        explanation: "'Sharing' means giving money to a cause you care about.",
-      },
-      {
-        id: 4,
-        question:
-          "How can the 30-60-10 plan help you when you become an adult with bills and living expenses?",
-        options: [
-          "It can help you spend all of your money on fun things immediately",
-          "It can help you practice organizing your money so that you have enough saved for emergencies and future goals",
-          "It can help you avoid paying bills and living expenses altogether",
-          "It can help you spend all of your money on wants and not needs",
-        ],
-        correctAnswer: 1,
-        explanation:
-          "The plan helps you practice organizing your money for emergencies and future goals.",
-      },
-      {
-        id: 5,
-        question:
-          "What is the purpose of the 'sharing' category in the 30-60-10 plan?",
-        options: [
-          "To encourage spending on fun things immediately",
-          "To allow you to give money to causes you care about and support",
-          "To help you save more money for a big purchase",
-          "To spend all of your money on wants and not needs",
-        ],
-        correctAnswer: 1,
-        explanation:
-          "The 'sharing' category allows you to give money to causes you care about and support.",
-      },
-      {
-        id: 6,
-        question:
-          "Is the 30-60-10 plan something you can start right away, even if you're not earning money yet?",
-        options: [
-          "No, it can only be started once you have a job",
-          "Yes, it can be started even before you have a job or start earning money",
-          "No, it's only for adults with bills and living expenses to pay",
-          "Yes, it's only for adults who want to save all of their money for a big purchase",
-        ],
-        correctAnswer: 1,
-        explanation:
-          "You can start the 30-60-10 plan even before you have a job or start earning money.",
-      },
-      {
-        id: 7,
-        question:
-          "What is the main benefit of practicing the 30-60-10 plan while you're still a student?",
-        options: [
-          "You can start spending all of your money on fun things right away",
-          "You can practice organizing your money so that you have enough saved for emergencies and future goals",
-          "You can avoid paying bills and living expenses altogether",
-          "You can spend all of your money on wants and not needs",
-        ],
-        correctAnswer: 1,
-        explanation:
-          "Practicing the plan as a student helps you organize your money for emergencies and future goals.",
-      },
-    ],
-  },
 ];
 
 const QuizPage = () => {
-  const { userProfile } = useUser();
+  const { userProfile, getLessonVideoProgress, updateQuizScore } = useUser();
   const [selectedQuiz, setSelectedQuiz] = useState<any>(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
@@ -1006,6 +918,26 @@ const QuizPage = () => {
     const saved = localStorage.getItem("quizList");
     return saved ? JSON.parse(saved) : quizzes;
   });
+
+  const location = useLocation();
+  // Get lesson title from query string
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const lessonTitle = params.get("lesson");
+    if (lessonTitle && !selectedQuiz) {
+      // Find the quiz for this lesson
+      const quiz = quizList.find((q) => q.lessonTitle === lessonTitle);
+      if (quiz) {
+        setSelectedQuiz(quiz);
+        setCurrentQuestion(0);
+        setSelectedAnswers([]);
+        setShowResults(false);
+        setQuizStarted(true);
+        window.scrollTo(0, 0);
+      }
+    }
+    // eslint-disable-next-line
+  }, [location.search, quizList]);
 
   useEffect(() => {
     localStorage.setItem("quizList", JSON.stringify(quizList));
@@ -1025,6 +957,7 @@ const QuizPage = () => {
       id: `coming-soon-${lesson.id}`,
       title: `${lesson.title} Quiz`,
       lessonTitle: lesson.title,
+      category: lesson.category,
       completed: false,
       score: null,
       questions: [],
@@ -1032,8 +965,19 @@ const QuizPage = () => {
     };
   });
 
-  const completedQuizzes = quizzesForAgeGroup.filter((q) => q.completed);
-  const incompleteQuizzes = quizzesForAgeGroup.filter((q) => !q.completed);
+  // Sort completed quizzes to show most recently completed first
+  const completedQuizzesFromList = quizList.filter(q => 
+    q.completed && lessons.some(lesson => lesson.title === q.lessonTitle)
+  );
+  const incompleteQuizzesFromList = quizList.filter(q => 
+    !q.completed && lessons.some(lesson => lesson.title === q.lessonTitle)
+  );
+  
+  // Combine: completed quizzes (in order from quizList) + incomplete quizzes (in lesson order)
+  const completedQuizzes = completedQuizzesFromList;
+  const incompleteQuizzes = incompleteQuizzesFromList.length > 0 
+    ? incompleteQuizzesFromList 
+    : quizzesForAgeGroup.filter((q) => !q.completed);
 
   const startQuiz = (quiz: any) => {
     setSelectedQuiz(quiz);
@@ -1056,11 +1000,27 @@ const QuizPage = () => {
       setShowResults(true);
       // Calculate score and mark quiz as completed
       const score = calculateScore();
-      setQuizList((prev) =>
-        prev.map((q) =>
-          q.id === selectedQuiz.id ? { ...q, completed: true, score } : q
-        )
-      );
+      setQuizList((prev) => {
+        const updatedList = prev.map((q) =>
+          q.id === selectedQuiz.id 
+            ? { 
+                ...q, 
+                completed: true, 
+                score: q.score ? Math.max(q.score, score) : score // Keep the highest score
+              } 
+            : q
+        );
+        // Move the retaken quiz to the front of the completed list
+        const retakenQuiz = updatedList.find(q => q.id === selectedQuiz.id);
+        if (retakenQuiz && retakenQuiz.completed) {
+          // Remove from current position and add to front
+          const filteredList = updatedList.filter(q => q.id !== selectedQuiz.id);
+          return [retakenQuiz, ...filteredList];
+        }
+        return updatedList;
+      });
+      // Update quizScores in userProfile
+      updateQuizScore(userProfile.currentAgeGroup, selectedQuiz.id, score);
     }
   };
 
@@ -1184,7 +1144,7 @@ const QuizPage = () => {
                     No time limit
                   </span>
                 </div>
-                <Progress value={progress} className="h-2" />
+                <Progress value={progress} className="h-3" />
               </div>
             </div>
 
@@ -1206,7 +1166,7 @@ const QuizPage = () => {
                   >
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                           selectedAnswers[currentQuestion] === index
                             ? "border-primary bg-primary text-white"
                             : "border-muted-foreground"
@@ -1245,7 +1205,7 @@ const QuizPage = () => {
             Knowledge Quizzes
           </h1>
           <p className="text-xl text-muted-foreground">
-            Test what you've learned from your completed lessons
+            Test what you've learned from {formatAgeGroupLabel(userProfile.currentAgeGroup)} Lessons
           </p>
         </div>
 
@@ -1257,42 +1217,59 @@ const QuizPage = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {incompleteQuizzes.map((quiz, index) => (
-              <Card
-                key={quiz.id}
-                className="card-interactive animate-fade-in h-full flex flex-col"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="p-6 flex flex-col h-full">
-                  <div className="flex items-start justify-between mb-4">
-                    <Badge variant="default" className="bg-primary text-white">
-                      To Do
-                    </Badge>
-                    <div className="text-right">
-                      <div className="text-lg font-medium text-foreground">
-                        {quiz.questions.length}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Questions
+            {incompleteQuizzes.map((quiz, index) => {
+              const lesson = lessons.find(l => l.title === quiz.lessonTitle);
+              let isCompleted = false;
+              if (lesson) {
+                const videoProgress = getLessonVideoProgress(
+                  currentAgeGroup,
+                  lesson.id,
+                  lesson.videos?.length || 0
+                );
+                isCompleted = videoProgress.completed === videoProgress.total && videoProgress.total > 0;
+              }
+              const comingSoon = !isCompleted;
+
+              return (
+                <Card
+                  key={quiz.id}
+                  className={`card-interactive animate-fade-in h-full flex flex-col ${comingSoon ? "opacity-60" : ""}`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="p-6 flex flex-col h-full">
+                    <div className="flex items-start justify-between mb-4">
+                      <Badge variant="default" className="bg-primary text-white">
+                        To Do
+                      </Badge>
+                      <div className="text-right">
+                        <div className="text-lg font-medium text-foreground">
+                          {quiz.questions.length}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Questions
+                        </div>
                       </div>
                     </div>
+                    <div className="flex-1 flex flex-col">
+                      <h3 className="font-semibold text-lg text-foreground mb-2">
+                        {quiz.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {capitalizeFirst(quiz.category)}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => startQuiz(quiz)}
+                      variant="hero"
+                      className="w-full mt-4"
+                      disabled={comingSoon}
+                    >
+                      {comingSoon ? "Coming Soon" : "Start Quiz"}
+                    </Button>
                   </div>
-                  <div className="flex-1 flex flex-col">
-                    <h3 className="font-semibold text-lg text-foreground mb-2">
-                      {quiz.title}
-                    </h3>
-                  </div>
-                  <Button
-                    onClick={() => startQuiz(quiz)}
-                    variant="hero"
-                    className="w-full mt-4"
-                    disabled={quiz.questions.length === 0}
-                  >
-                    {quiz.questions.length === 0 ? "Coming Soon" : "Start Quiz"}
-                  </Button>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
           </div>
         </div>
 
@@ -1329,6 +1306,9 @@ const QuizPage = () => {
                       <h3 className="font-semibold text-lg text-foreground mb-2">
                         {quiz.title}
                       </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {capitalizeFirst(quiz.category)}
+                      </p>
                     </div>
                     <Button
                       onClick={() => startQuiz(quiz)}
@@ -1343,7 +1323,6 @@ const QuizPage = () => {
             </div>
           ) : (
             <Card className="p-8 text-center">
-              <Trophy className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">
                 No completed quizzes yet. Complete some lessons first!
               </p>

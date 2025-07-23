@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import { StartLessonButton } from "./StartLessonButton";
 import {
   Dialog,
   DialogContent,
@@ -33,6 +32,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import LessonDetailsDialog from "@/components/LessonDetailsDialog";
+import { parseDurationToMinutes, formatAgeGroupLabel } from "@/lib/utils";
 // future consideration: automating categorization based on title/video, default linking 'image' to category
 // Mock lesson data
 export const lessonsData = {
@@ -131,7 +131,7 @@ export const lessonsData = {
         "Covers the basics of checking and savings accounts, how they work, and why they’re important for managing money.",
       image: "💰",
       completed: false,
-      starred: true,
+      starred: false,
       duration: "6 min",
       videos: [
         {
@@ -642,7 +642,7 @@ const categories = {
   basics: "Basics",
   saving: "Saving",
   budgeting: "Budgeting",
-  credit: "Credit & Loans",
+  credit: "Credit",
   investing: "Investing",
   retirement: "Retirement",
   taxes: "Taxes",
@@ -659,29 +659,6 @@ const categoryColors: Record<string, string> = {
   taxes: "bg-red-100 text-red-800",
   giving: "bg-teal-100 text-teal-800",
 };
-
-// Helper to parse duration strings like '1 hr', '30 min', '3 hr 40 min', etc.
-function parseDurationToMinutes(duration: string): number {
-  let total = 0;
-  const hrMatch = duration.match(/(\d+)\s*hr/);
-  const minMatch = duration.match(/(\d+)\s*min/);
-  if (hrMatch) total += parseInt(hrMatch[1], 10) * 60;
-  if (minMatch) total += parseInt(minMatch[1], 10);
-  return total;
-}
-
-// Helper to format age group label
-export function formatAgeGroupLabel(ageGroup: string | undefined) {
-  if (!ageGroup) return '';
-  // Insert space before capital letters (except the first), then capitalize each word
-  return ageGroup
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, (str) => str.toUpperCase())
-    .trim()
-    .split(' ')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
-}
 
 const LessonViewer = () => {
   const { ageGroup } = useParams<{ ageGroup: string }>();
@@ -780,8 +757,7 @@ const LessonViewer = () => {
   };
 
   const goToQuiz = (lesson: any) => {
-    // Navigate to quiz page
-    console.log("Going to quiz for:", lesson.title);
+    navigate(`/quiz?lesson=${encodeURIComponent(lesson.title)}`);
   };
 
   // Check if lesson is completed based on video progress

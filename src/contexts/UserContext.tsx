@@ -11,6 +11,8 @@ export interface UserProfile {
   ageGroup: string;
   currentAgeGroup: string;
   completedAgeGroups: string[];
+  profileImage?: string;
+  email?: string;
   progress: {
     [ageGroup: string]: {
       completedLessons: number;
@@ -295,15 +297,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       };
     }
 
-    updatedProfile.progress[ageGroup].completedQuizzes++;
-
-    // Update average score
-    const currentTotal =
-      updatedProfile.progress[ageGroup].averageScore *
-      (updatedProfile.progress[ageGroup].completedQuizzes - 1);
-    updatedProfile.progress[ageGroup].averageScore =
-      (currentTotal + score) /
-      updatedProfile.progress[ageGroup].completedQuizzes;
+    updatedProfile.progress[ageGroup].quizScores.push(score);
+    updatedProfile.progress[ageGroup].completedQuizzes = updatedProfile.progress[ageGroup].quizScores.length;
+    const quizzesCompleted = updatedProfile.progress[ageGroup].quizScores.length;
+    const totalScore = updatedProfile.progress[ageGroup].quizScores.reduce((a, b) => a + b, 0);
+    updatedProfile.progress[ageGroup].averageScore = quizzesCompleted > 0 ? totalScore / quizzesCompleted : 0;
 
     updatedProfile.progress[ageGroup].lastActivity = new Date().toISOString();
     setUserProfile(updatedProfile);

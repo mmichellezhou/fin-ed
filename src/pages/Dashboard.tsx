@@ -13,7 +13,8 @@ import {
 } from "lucide-react";
 import { useUser } from "@/contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import { lessonsData, formatAgeGroupLabel } from "./LessonViewer";
+import { lessonsData } from "./LessonViewer";
+import { formatAgeGroupLabel } from "@/lib/utils";
 
 const Dashboard = () => {
   const { userProfile, isAgeGroupCompleted } = useUser();
@@ -87,6 +88,8 @@ const Dashboard = () => {
   const quizScores = Array.isArray(userProfile.progress[userProfile.currentAgeGroup]?.quizScores)
     ? userProfile.progress[userProfile.currentAgeGroup].quizScores
     : [];
+  const quizzesCompleted = quizScores.length;
+  const quizAverage = quizzesCompleted > 0 ? Math.round(quizScores.reduce((a, b) => a + b, 0) / quizzesCompleted) : 0;
   const quizMasterEarned = quizScores.filter((score) => score >= 90).length >= 3;
   // 3. Consistent Learner: Complete lessons 5 days in a row
   const streak = userProfile.progress[userProfile.currentAgeGroup]?.streak || 0;
@@ -155,13 +158,13 @@ const Dashboard = () => {
               <div>
                 <p className="text-sm text-muted-foreground">Quiz Average</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {userProfile.progress[userProfile.currentAgeGroup]?.averageScore || 0}%
+                  {quizAverage}%
                 </p>
               </div>
               <Target className="w-8 h-8 text-success" />
             </div>
             <div className="mt-3 text-xs text-muted-foreground">
-              {userProfile.progress[userProfile.currentAgeGroup]?.completedQuizzes || 0} quizzes completed
+              {quizzesCompleted} quizzes completed
             </div>
           </Card>
 
@@ -226,7 +229,7 @@ const Dashboard = () => {
                   <div className="text-xs text-muted-foreground text-right">
                     {category.percentage}% complete
                   </div>
-                </div>
+              </div>
               ))}
             </div>
           </Card>

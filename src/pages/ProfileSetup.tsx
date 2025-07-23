@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useUser } from "@/contexts/UserContext";
 import { GraduationCap, Baby, Pencil, User, Briefcase, Heart, UserCheck, ArrowRight } from "lucide-react";
+import { lessonsData } from "./LessonViewer";
 
 const ageGroups = [
   {
@@ -78,13 +79,14 @@ const ProfileSetup = () => {
           [selectedAgeGroup]: {
             completedLessons: 0,
             totalLessons:
-              ageGroups.find((ag) => ag.id === selectedAgeGroup)?.lessons || 0,
+              lessonsData[selectedAgeGroup]?.length || 0,
             completedQuizzes: 0,
             totalQuizzes: 0,
             averageScore: 0,
             streak: 0,
             lastActivity: new Date().toISOString(),
             videoProgress: {},
+            quizScores: [],
           },
         },
         badges: [],
@@ -92,6 +94,7 @@ const ProfileSetup = () => {
 
       setUserProfile(newProfile);
       navigate(`/lessons/${selectedAgeGroup}`);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -209,8 +212,8 @@ const ProfileSetup = () => {
                         >
                           <Icon className="w-6 h-6 text-white" />
                         </div>
-                        <Badge variant="secondary">
-                          {group.lessons} lessons
+                        <Badge className="bg-primary text-white">
+                          {lessonsData[group.id]?.length || 0} lessons
                         </Badge>
                       </div>
 
