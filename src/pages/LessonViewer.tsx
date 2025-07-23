@@ -205,7 +205,7 @@ export const lessonsData = {
     },
     {
       id: 8,
-      title: "Credit Cards and Credit Scores",
+      title: "Credit Scores & Credit Cards",
       category: "credit",
       description:
         "Explains credit card use, interest, and responsible habits. Breaks down credit scores and how to improve them.",
@@ -508,7 +508,7 @@ export const lessonsData = {
     },
     {
       id: 5,
-      title: "Credit Cards and Credit Scores",
+      title: "Credit Cards & Credit Scores",
       category: "credit",
       description:
         "Basic credit card usage tips—how interest works and how to avoid debt.",
@@ -708,14 +708,28 @@ const LessonViewer = () => {
     let filtered = lessons;
     // Category filter
     if (categoryFilter !== "all") {
-      filtered = filtered.filter((lesson) => lesson.category === categoryFilter);
+      filtered = filtered.filter(
+        (lesson) => lesson.category === categoryFilter
+      );
     }
     // Completion filter
     if (completionFilter) {
       filtered = filtered.filter((lesson) => {
-        if (completionFilter === "todo") return !isLessonCompleted(lesson) && getLessonVideoProgress(ageGroup || "", lesson.id, lesson.videos?.length || 0).completed === 0;
+        if (completionFilter === "todo")
+          return (
+            !isLessonCompleted(lesson) &&
+            getLessonVideoProgress(
+              ageGroup || "",
+              lesson.id,
+              lesson.videos?.length || 0
+            ).completed === 0
+          );
         if (completionFilter === "inprogress") {
-          const videoProgress = getLessonVideoProgress(ageGroup || "", lesson.id, lesson.videos?.length || 0);
+          const videoProgress = getLessonVideoProgress(
+            ageGroup || "",
+            lesson.id,
+            lesson.videos?.length || 0
+          );
           return !isLessonCompleted(lesson) && videoProgress.completed > 0;
         }
         if (completionFilter === "completed") return isLessonCompleted(lesson);
@@ -732,13 +746,25 @@ const LessonViewer = () => {
     }
     // Sort
     if (sortBy === "name") {
-      filtered = [...filtered].sort((a, b) => a.title.trim().localeCompare(b.title.trim()));
+      filtered = [...filtered].sort((a, b) =>
+        a.title.trim().localeCompare(b.title.trim())
+      );
     } else if (sortBy === "shortest") {
-      filtered = [...filtered].sort((a, b) => parseDurationToMinutes(a.duration) - parseDurationToMinutes(b.duration));
+      filtered = [...filtered].sort(
+        (a, b) =>
+          parseDurationToMinutes(a.duration) -
+          parseDurationToMinutes(b.duration)
+      );
     } else if (sortBy === "longest") {
-      filtered = [...filtered].sort((a, b) => parseDurationToMinutes(b.duration) - parseDurationToMinutes(a.duration));
+      filtered = [...filtered].sort(
+        (a, b) =>
+          parseDurationToMinutes(b.duration) -
+          parseDurationToMinutes(a.duration)
+      );
     } else if (sortBy === "starred") {
-      filtered = [...filtered].sort((a, b) => (b.starred ? 1 : 0) - (a.starred ? 1 : 0));
+      filtered = [...filtered].sort(
+        (a, b) => (b.starred ? 1 : 0) - (a.starred ? 1 : 0)
+      );
     }
     setFilteredLessons(filtered);
   }, [lessons, categoryFilter, completionFilter, searchTerm, sortBy]);
@@ -785,7 +811,10 @@ const LessonViewer = () => {
       lesson.id,
       lesson.videos.length
     );
-    if (videoProgress.completed === videoProgress.total && videoProgress.total > 0) {
+    if (
+      videoProgress.completed === videoProgress.total &&
+      videoProgress.total > 0
+    ) {
       return { text: "Completed", className: "bg-success text-white" };
     } else if (videoProgress.completed > 0) {
       return { text: "In Progress", className: "bg-warning text-white" };
@@ -810,7 +839,10 @@ const LessonViewer = () => {
           <p className="text-muted-foreground mb-4">
             Progress: {completedCount} of {totalLessons} lessons completed
           </p>
-          <Progress value={(completedCount / totalLessons) * 100} className="h-3 max-w-md mx-auto mt-0" />
+          <Progress
+            value={(completedCount / totalLessons) * 100}
+            className="h-3 max-w-md mx-auto mt-0"
+          />
 
           {/* Age Group Note */}
           <div className="mt-4 max-w-xl mx-auto text-center">
@@ -909,49 +941,130 @@ const LessonViewer = () => {
               />
             </div>
             {/* Sort Dropdown */}
-            <DropdownMenu open={openDropdown === "sort"} onOpenChange={(open) => setOpenDropdown(open ? "sort" : null)}>
+            <DropdownMenu
+              open={openDropdown === "sort"}
+              onOpenChange={(open) => setOpenDropdown(open ? "sort" : null)}
+            >
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
-                  {sortBy ? (sortBy === "name" ? "Name" : sortBy === "shortest" ? "Shortest" : sortBy === "longest" ? "Longest" : sortBy === "starred" ? "Starred" : "Sort by") : "Sort by"}
-                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "sort" ? "rotate-180" : "rotate-0"}`} />
+                <Button
+                  variant="outline"
+                  className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary"
+                >
+                  {sortBy
+                    ? sortBy === "name"
+                      ? "Name"
+                      : sortBy === "shortest"
+                      ? "Shortest"
+                      : sortBy === "longest"
+                      ? "Longest"
+                      : sortBy === "starred"
+                      ? "Starred"
+                      : "Sort by"
+                    : "Sort by"}
+                  <ChevronDown
+                    className={`ml-2 transition-transform ${
+                      openDropdown === "sort" ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => setSortBy("")}>Sort by</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("name")}>Name</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("shortest")}>Shortest</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("longest")}>Longest</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setSortBy("starred")}>Starred</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("")}>
+                  Sort by
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("name")}>
+                  Name
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("shortest")}>
+                  Shortest
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("longest")}>
+                  Longest
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSortBy("starred")}>
+                  Starred
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             {/* Category Dropdown */}
-            <DropdownMenu open={openDropdown === "category"} onOpenChange={(open) => setOpenDropdown(open ? "category" : null)}>
+            <DropdownMenu
+              open={openDropdown === "category"}
+              onOpenChange={(open) => setOpenDropdown(open ? "category" : null)}
+            >
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
-                  {categoryFilter === "all" ? "Category" : categories[categoryFilter as keyof typeof categories]}
-                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "category" ? "rotate-180" : "rotate-0"}`} />
+                <Button
+                  variant="outline"
+                  className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary"
+                >
+                  {categoryFilter === "all"
+                    ? "Category"
+                    : categories[categoryFilter as keyof typeof categories]}
+                  <ChevronDown
+                    className={`ml-2 transition-transform ${
+                      openDropdown === "category" ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => setCategoryFilter("all")}>Category</DropdownMenuItem>
-                {Object.entries(categories).filter(([key]) => key !== "all").map(([key, label]) => (
-                  <DropdownMenuItem key={key} onClick={() => setCategoryFilter(key)}>{label}</DropdownMenuItem>
-                ))}
+                <DropdownMenuItem onClick={() => setCategoryFilter("all")}>
+                  Category
+                </DropdownMenuItem>
+                {Object.entries(categories)
+                  .filter(([key]) => key !== "all")
+                  .map(([key, label]) => (
+                    <DropdownMenuItem
+                      key={key}
+                      onClick={() => setCategoryFilter(key)}
+                    >
+                      {label}
+                    </DropdownMenuItem>
+                  ))}
               </DropdownMenuContent>
             </DropdownMenu>
             {/* Completion Dropdown */}
-            <DropdownMenu open={openDropdown === "completion"} onOpenChange={(open) => setOpenDropdown(open ? "completion" : null)}>
+            <DropdownMenu
+              open={openDropdown === "completion"}
+              onOpenChange={(open) =>
+                setOpenDropdown(open ? "completion" : null)
+              }
+            >
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary">
-                  {completionFilter ? (completionFilter === "todo" ? "To Do" : completionFilter === "inprogress" ? "In Progress" : "Completed") : "Completion"}
-                  <ChevronDown className={`ml-2 transition-transform ${openDropdown === "completion" ? "rotate-180" : "rotate-0"}`} />
+                <Button
+                  variant="outline"
+                  className="min-w-[140px] flex items-center justify-between bg-white hover:border-primary"
+                >
+                  {completionFilter
+                    ? completionFilter === "todo"
+                      ? "To Do"
+                      : completionFilter === "inprogress"
+                      ? "In Progress"
+                      : "Completed"
+                    : "Completion"}
+                  <ChevronDown
+                    className={`ml-2 transition-transform ${
+                      openDropdown === "completion" ? "rotate-180" : "rotate-0"
+                    }`}
+                  />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem onClick={() => setCompletionFilter("")}>Completion</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCompletionFilter("todo")}>To Do</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCompletionFilter("inprogress")}>In Progress</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCompletionFilter("completed")}>Completed</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCompletionFilter("")}>
+                  Completion
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCompletionFilter("todo")}>
+                  To Do
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setCompletionFilter("inprogress")}
+                >
+                  In Progress
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setCompletionFilter("completed")}
+                >
+                  Completed
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -988,13 +1101,29 @@ const LessonViewer = () => {
                     <div className="space-y-3 flex-1">
                       <div className="flex items-center gap-2 justify-start">
                         <Badge
-                          variant={isLessonCompleted(lesson) ? "default" : "secondary"}
-                          className={(categoryColors[lesson.category] || "") + " pointer-events-none select-none"}
+                          variant={
+                            isLessonCompleted(lesson) ? "default" : "secondary"
+                          }
+                          className={
+                            (categoryColors[lesson.category] || "") +
+                            " pointer-events-none select-none"
+                          }
                         >
-                          {categories[lesson.category as keyof typeof categories]}
+                          {
+                            categories[
+                              lesson.category as keyof typeof categories
+                            ]
+                          }
                         </Badge>
                         {/* Status badge */}
-                        <Badge className={getLessonStatus(lesson).className + " pointer-events-none select-none"}>{getLessonStatus(lesson).text}</Badge>
+                        <Badge
+                          className={
+                            getLessonStatus(lesson).className +
+                            " pointer-events-none select-none"
+                          }
+                        >
+                          {getLessonStatus(lesson).text}
+                        </Badge>
                       </div>
 
                       <h3 className="font-semibold text-lg text-foreground">

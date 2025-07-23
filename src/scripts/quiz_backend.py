@@ -22,16 +22,14 @@ def generate_quiz_with_localai(transcript):
         "messages": [
             {
                 "role": "user",
-                "content": (
-                    "Based on the following lesson transcript, generate 7 multiple-choice quiz questions. "
-                    "Each question should have 4 options and indicate the correct answer.\nTranscript:\n" + transcript
-                )
+                "content": transcript
             }
         ],
-        "max_tokens": 4000
+        "max_tokens": 8000,
+        "temperature": 0.7
     }
-    print(f"Sending request to LocalAI with data: {data}")
-    response = requests.post(url, headers=headers, json=data)
+    print(f"Sending request to LocalAI with data length: {len(str(data))}")
+    response = requests.post(url, headers=headers, json=data, timeout=180)
     print(f"LocalAI response status: {response.status_code}")
     print(f"LocalAI response: {response.text}")
     response.raise_for_status()

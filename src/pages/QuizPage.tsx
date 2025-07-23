@@ -332,8 +332,8 @@ const quizzes = [
   },
   {
     id: 6,
-    title: "Credit Cards and Credit Scores Quiz",
-    lessonTitle: "Credit Cards and Credit Scores",
+    title: "Credit Cards & Credit Scores Quiz",
+    lessonTitle: "Credit Cards & Credit Scores",
     category: "credit",
     completed: false,
     score: null,
@@ -905,6 +905,1185 @@ const quizzes = [
       },
     ],
   },
+  {
+    id: 14,
+    title: "Credit Scores Quiz",
+    lessonTitle: "Credit Scores",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question: "What is a budget?",
+        options: [
+          "A plan for spending money on fun things",
+          "A plan for limiting spending on fun things or wants to make sure you have enough money for necessary things",
+          "A plan for increasing debt",
+          "A plan for investing in the stock market",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "A budget helps you limit spending on wants so you have enough for needs.",
+      },
+      {
+        id: 2,
+        question: "What is the 30-60-10 plan for students?",
+        options: [
+          "Saving 50%, spending 50%, and sharing 100% of their income",
+          "Saving 30%, spending 60%, and sharing 10% of their income",
+          "Saving 50%, spending 20%, and sharing 30% of their income",
+          "Saving 70%, spending 30%, and sharing 0% of their income",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "The 30-60-10 plan means saving 30%, spending 60%, and sharing 10%.",
+      },
+      {
+        id: 3,
+        question:
+          'What does "sharing" mean in the context of the 30-60-10 plan?',
+        options: [
+          "Saving for a future purchase",
+          "Giving money to a cause you care about",
+          "Investing in a stock",
+          "Borrowing money from friends or family",
+        ],
+        correctAnswer: 1,
+        explanation: "Sharing means giving money to a cause you care about.",
+      },
+      {
+        id: 4,
+        question: "What is the purpose of the 30-60-10 plan?",
+        options: [
+          "To teach you how to budget and save money",
+          "To encourage you to spend all of your money on fun things",
+          "To help you pay off debt",
+          "To prepare you for investing in the stock market",
+        ],
+        correctAnswer: 0,
+        explanation: "The plan teaches you how to budget and save money.",
+      },
+      {
+        id: 5,
+        question: "How does the 30-60-10 plan help you as you grow older?",
+        options: [
+          "It teaches you how to manage your money well",
+          "It helps you pay off debt and invest in the stock market",
+          "It teaches you how to avoid spending too much on fun things",
+          "It helps you plan for buying a house and paying for your children's education",
+        ],
+        correctAnswer: 0,
+        explanation: "It teaches you how to manage your money well.",
+      },
+      {
+        id: 6,
+        question:
+          "Why is it important to start budgeting and saving early in life?",
+        options: [
+          "Because you will have more money to spend on fun things",
+          "Because you will have more money for unnecessary expenses",
+          "Because it will help you prepare for the future",
+          "Because it will teach you how to invest in the stock market",
+        ],
+        correctAnswer: 2,
+        explanation: "Starting early helps you prepare for the future.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 15,
+    title: "Intro to Investing (Playlist) Quiz",
+    lessonTitle: "Intro to Investing (Playlist)",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question: "What is the primary difference between stocks and bonds?",
+        options: [
+          "Stocks are a representation of ownership in a public company and bonds are a loan from a corporation or government",
+          "Bonds are a representation of ownership in a public company and stocks are a loan from a corporation or government",
+          "Bonds are a representation of ownership in a public company and stocks are a loan from a corporation or government",
+          "Stocks and bonds are both essentially loans from a corporation or government",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Stocks represent ownership in a company, while bonds are loans to a corporation or government.",
+      },
+      {
+        id: 2,
+        question: "What are the three components of bonds?",
+        options: [
+          "Their interest rate, maturity date and par value amount",
+          "Their dividend rate, maturity date and par value amount",
+          "Their coupon rate, bond's maturity and par value amount",
+          "Their dividend rate, coupon rate and par value amount",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "The three components of bonds are interest rate, maturity date, and par value amount.",
+      },
+      {
+        id: 3,
+        question:
+          "What is the role of financial intermediaries in a financial system?",
+        options: [
+          "To transfer funds from savers to borrowers",
+          "To facilitate the exchange of assets between savers and borrowers",
+          "To invest in securities on behalf of savers",
+          "To provide credit to borrowers",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Financial intermediaries transfer funds from savers to borrowers.",
+      },
+      {
+        id: 4,
+        question:
+          "What is the difference between simple and compound interest?",
+        options: [
+          "Simple interest is calculated based on the principal and interest accrued while compound interest is based on the principal only",
+          "Compound interest is calculated based on the principal and interest accrued while simple interest is based on the principal only",
+          "Simple interest is calculated on the principal amount of a loan or deposit while compound interest is calculated based on both the principal and interest",
+          "Compound interest is calculated based on the principal and interest accrued while simple interest is calculated on the principal amount of a loan or deposit",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Simple interest is calculated on the principal only; compound interest is calculated on both principal and interest.",
+      },
+      {
+        id: 5,
+        question: "What is the formula for calculating simple interest?",
+        options: [
+          "A = P(1 + rt)",
+          "A = P + rt",
+          "A = P(1 + rt) + P",
+          "A = P(1 + rt) + (P * r * t)",
+        ],
+        correctAnswer: 0,
+        explanation: "The formula for simple interest is A = P(1 + rt).",
+      },
+      {
+        id: 6,
+        question: "What is a pension fund?",
+        options: [
+          "A type of investment where funds are invested in stocks, bonds and other financial assets",
+          "A type of savings account where funds are invested in stocks, bonds and other financial assets",
+          "A type of investment where funds are invested in a variety of stocks, bonds, and other financial assets",
+          "A type of investment where funds are invested in a single stock or bond",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "A pension fund invests in a variety of stocks, bonds, and other financial assets.",
+      },
+      {
+        id: 7,
+        question:
+          "What is the best way to reduce risk when investing your money?",
+        options: [
+          "Invest in a single risky venture",
+          "Invest in a diverse range of securities",
+          "Invest all your money in bonds",
+          "Invest all your money in stocks",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Diversification is the best way to reduce risk when investing.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 16,
+    title: "Taxes and Your Paycheck Quiz",
+    lessonTitle: "Taxes and Paychecks",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is the purpose of the space on a modern pay stub for vacation, sick, or personal time?",
+        options: [
+          "To track the hours worked by the employee",
+          "To indicate the amount earned in the paycheck for vacation, sick, or personal time",
+          "To show the total amount earned by the employee",
+          "To calculate the net pay after deductions",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "This space shows the amount earned for vacation, sick, or personal time.",
+      },
+      {
+        id: 2,
+        question:
+          "What is the amount listed on a job posting as the amount made before taxes and deductions?",
+        options: [
+          "The amount after taxes and deductions",
+          "The amount made per hour",
+          "The annual salary",
+          "The non-tax deductions",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "The annual salary is the amount before taxes and deductions.",
+      },
+      {
+        id: 3,
+        question:
+          "What is one example of a deduction that may be made from an employee's gross pay?",
+        options: [
+          "Health insurance premium",
+          "Retirement savings contribution",
+          "Taxes",
+          "All of the above",
+        ],
+        correctAnswer: 0,
+        explanation: "Health insurance premium is one example of a deduction.",
+      },
+      {
+        id: 4,
+        question: "What factors affect the amount of taxes you pay?",
+        options: [
+          "Your job's healthcare benefits",
+          "The types of taxes and the percentage of your income they cost",
+          "The specific amount deducted from your paycheck",
+          "None of the above",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "The types of taxes and their rates affect your total tax.",
+      },
+      {
+        id: 5,
+        question:
+          "What are the three types of taxes mentioned in the transcript?",
+        options: [
+          "Federal income tax, state income tax, and sales tax",
+          "Federal income tax, FICA medicare, and social security taxes",
+          "Property tax, income tax, and capital gains tax",
+          "Payroll tax, corporate tax, and estate tax",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Federal income tax, FICA medicare, and social security taxes are the three types mentioned.",
+      },
+      {
+        id: 6,
+        question:
+          "What does FICA stand for, and what are the federal programs it funds?",
+        options: [
+          "FICA stands for Federal Insurance Contributions Act, which funds Social Security and Medicare.",
+          "FICA stands for Federal Investment Credit Association, which funds education and job training.",
+          "FICA stands for Federal Insurance Contributions Act, but the programs it funds are Social Security and Medicaid.",
+          "FICA stands for Federal Income Contributions Act, which funds income-based assistance for low-income individuals.",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "FICA stands for Federal Insurance Contributions Act and funds Social Security and Medicare.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 17,
+    title: "Loans and Debt Quiz",
+    lessonTitle: "Loans and Debt",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is the backbone of borrowing and investing in the world of finance?",
+        options: [
+          "Interest rates",
+          "Principal",
+          "Compound interest",
+          "Economic factors",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Interest rates are fundamental to borrowing and investing.",
+      },
+      {
+        id: 2,
+        question: "What are the two main types of interest rates?",
+        options: [
+          "Simple and compound interest",
+          "Principal and loan terms",
+          "Economic factors and interest rates",
+          "Interest rates and debt",
+        ],
+        correctAnswer: 0,
+        explanation: "Simple and compound interest are the two main types.",
+      },
+      {
+        id: 3,
+        question: "What is the initial loan amount in loans?",
+        options: [
+          "Principle",
+          "Interest rate",
+          "Loan terms",
+          "Economic factors",
+        ],
+        correctAnswer: 0,
+        explanation: "The principal is the initial loan amount.",
+      },
+      {
+        id: 4,
+        question: "What is the cost of borrowing money in loans?",
+        options: [
+          "Interest rate",
+          "Principle",
+          "Loan terms",
+          "Economic factors",
+        ],
+        correctAnswer: 0,
+        explanation: "The interest rate is the cost of borrowing.",
+      },
+      {
+        id: 5,
+        question:
+          "What is the potential return on investments in the world of finance?",
+        options: [
+          "Interest rates",
+          "Compound interest",
+          "Principal",
+          "Economic factors",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Compound interest is the potential return on investments.",
+      },
+      {
+        id: 6,
+        question: "What is the loan agreement in loans?",
+        options: [
+          "Interest rate",
+          "Principle",
+          "Loan terms",
+          "Economic factors",
+        ],
+        correctAnswer: 2,
+        explanation: "Loan terms are the agreement details.",
+      },
+      {
+        id: 7,
+        question: "What is the key to understanding loans and debt?",
+        options: [
+          "Interest rates",
+          "Principle",
+          "Loan terms",
+          "Economic factors",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Understanding loan terms is key to understanding loans and debt.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 18,
+    title: "Retirement and Financial Independence Quiz",
+    lessonTitle: "Retirement and Financial Independence",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question: "What does the FIRE movement stand for?",
+        options: [
+          "Financial Aid for Retirees",
+          "Financial Independence, Retire Early",
+          "Financial Assistance for Students",
+          "Financial Investment in Real Estate",
+        ],
+        correctAnswer: 1,
+        explanation: "FIRE stands for Financial Independence, Retire Early.",
+      },
+      {
+        id: 2,
+        question:
+          'What is the first key tenet of financial independence, commonly referred to as "FIRE"?',
+        options: [
+          "Spending more than your means",
+          "Living below your means and practicing discipline",
+          "Investing in high-risk stocks",
+          "Saving for retirement only",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Living below your means and practicing discipline is the first key tenet.",
+      },
+      {
+        id: 3,
+        question: "What is frugal living?",
+        options: [
+          "Living frugally is only about having the smallest footprint possible",
+          "Living frugally is about living the life you want to live",
+          "Frugal living is not important for others",
+          "Frugal living is only about minimalism",
+        ],
+        correctAnswer: 1,
+        explanation: "Frugal living is about living the life you want to live.",
+      },
+      {
+        id: 4,
+        question:
+          "What does the speaker suggest people do in order to live below their means and save a significant portion of their income?",
+        options: [
+          "Spend all their income on unnecessary expenses",
+          "Save a huge proportion of their income towards their financial goals",
+          "Live an extravagant lifestyle and never save money",
+          "Invest all their savings in risky ventures",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "The speaker suggests saving a huge proportion of income towards financial goals.",
+      },
+      {
+        id: 5,
+        question:
+          "What is a main concern regarding the retirement savings strategy mentioned in the transcript?",
+        options: [
+          "Saving enough money for retirement",
+          "Saving too much money and becoming a financial miser",
+          "Saving too little money and not being financially independent",
+          "Avoiding debt and building wealth",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "A main concern is saving too little and not being financially independent.",
+      },
+      {
+        id: 6,
+        question:
+          "What is the recommended savings rate to achieve financial goals?",
+        options: ["25%", "50%", "70%", "90%"],
+        correctAnswer: 1,
+        explanation:
+          "A 50% savings rate is recommended to achieve financial goals.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 1001,
+    title: "Understanding Money & Your Relationship With It Quiz",
+    lessonTitle: "Understanding Money & Your Relationship With It",
+    category: "basics",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is the primary advice given to maintain a healthy relationship with money?",
+        options: [
+          "Make money the center of your life",
+          "Make having more money the number one goal of your life",
+          "Spend more to impress others",
+          "Prioritize financial stability and savings",
+        ],
+        correctAnswer: 3,
+        explanation:
+          "Prioritizing financial stability and savings is key to a healthy relationship with money.",
+      },
+      {
+        id: 2,
+        question: "What is the main purpose of money according to the speaker?",
+        options: [
+          "To provide entertainment",
+          "To be used as a tool to help serve others and fulfill personal goals",
+          "To be hoarded for personal gain",
+          "To be spent recklessly",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Money is a tool to help serve others and fulfill personal goals.",
+      },
+      {
+        id: 3,
+        question:
+          "What is an important step to take to ensure your spending aligns with your values?",
+        options: [
+          "Review your credit card statements every month",
+          "Set a budget and track your spending",
+          "Only spend money on things you need",
+          "Allocate all your income towards savings",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Setting a budget and tracking spending helps align spending with values.",
+      },
+      {
+        id: 4,
+        question: "What is an important step in developing financial literacy?",
+        options: [
+          "Avoiding discussions about money",
+          "Reflecting on personal feelings about money",
+          "Focusing solely on where money is coming from",
+          "Ignoring sources of financial stress",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Reflecting on personal feelings about money is important for financial literacy.",
+      },
+      {
+        id: 5,
+        question: "What is the purpose of financial literacy?",
+        options: [
+          "To teach how to invest in risky stocks",
+          "To help individuals manage their finances and reduce stress",
+          "To encourage people to spend more money",
+          "To provide information on how to make more money through illegal means",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Financial literacy helps individuals manage finances and reduce stress.",
+      },
+      {
+        id: 6,
+        question:
+          "What is the primary focus of the speaker's advice in the transcript?",
+        options: [
+          "Setting high financial goals",
+          "Avoiding disappointment in finances",
+          "Injecting reality into expectations about finances",
+          "Celebrating all the upside that better finances can bring",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Injecting reality into expectations is the primary focus.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 1002,
+    title: "Budgeting Quiz",
+    lessonTitle: "Budgeting",
+    category: "budgeting",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is the best strategy for simplifying financial categories, according to the transcript?",
+        options: [
+          "Keeping all expenses in one category",
+          "Simplifying categories as much as possible",
+          "Assigning specific percentages to each category",
+          "Creating complex sub-categories",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Simplifying categories as much as possible makes budgeting easier.",
+      },
+      {
+        id: 2,
+        question:
+          "What category does the person use to describe their monthly expenses that stay the same price and need to be paid every month?",
+        options: ["Entertainment", "Essentials", "Travel", "Investments"],
+        correctAnswer: 1,
+        explanation:
+          "Essentials are monthly expenses that stay the same and must be paid.",
+      },
+      {
+        id: 3,
+        question:
+          "What are some factors that the speaker considers when creating a budget that have worked consistently, even with changes in personal circumstances?",
+        options: [
+          "Avoiding credit card debt",
+          "Creating a flexible budget",
+          "Diversifying income sources",
+          "Cutting all non-essential expenses",
+        ],
+        correctAnswer: 1,
+        explanation: "A flexible budget works even as circumstances change.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 1003,
+    title: "Banking & How To Use It Quiz",
+    lessonTitle: "Banking & How To Use It",
+    category: "basics",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question: "What role do banks play in modern society?",
+        options: [
+          "Banks solely provide savings accounts",
+          "Banks only offer digital transactions",
+          "Banks have no significance in our daily lives",
+          "Banks have no impact on the global economy",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Banks offer digital transactions and play a key role in modern society.",
+      },
+      {
+        id: 2,
+        question: "What is the primary function of a bank?",
+        options: [
+          "A place for people to socialize and make friends.",
+          "A central hub for money flow and financial transactions.",
+          "A government institution responsible for regulating financial markets.",
+          "A place where people can store their personal belongings.",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "The primary function of a bank is to serve as a central hub for money flow and financial transactions.",
+      },
+      {
+        id: 3,
+        question:
+          "What is one way to ensure the security of your funds when depositing money into a bank account?",
+        options: [
+          "Keeping the money in a mattress",
+          "Using sophisticated security measures employed by banks",
+          "Storing the money in a physical safe at home",
+          "Only depositing large amounts of money once a year",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Banks use sophisticated security measures to keep your funds safe.",
+      },
+      {
+        id: 4,
+        question:
+          "What are the three main types of bank accounts and what is the primary purpose of each?",
+        options: [
+          "Savings account, checking account, and certificates of deposit; primarily used for long-term savings",
+          "Credit card account, checking account, and savings account; primarily used for short-term spending and savings",
+          "Checking account, savings account, and certificate of deposit; primarily used for medium-term savings",
+          "Retirement account, savings account, and credit card; primarily used for long-term savings and debt repayment",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Credit card, checking, and savings accounts are primarily for short-term spending and savings.",
+      },
+      {
+        id: 5,
+        question:
+          "What are the benefits of checking accounts and debit cards for managing your money?",
+        options: [
+          "They provide easy access to your money, but do not offer convenience for making purchases.",
+          "They enable you to keep your money safe and provide a convenient way to make purchases without carrying cash.",
+          "They only work for online transactions and require carrying cash for all other purchases.",
+          "They do not allow you to access your money unless you have a physical bank branch nearby.",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Checking accounts and debit cards keep your money safe and make purchases convenient.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 1004,
+    title: "Saving & Emergency Funds Quiz",
+    lessonTitle: "Saving & Emergency Funds",
+    category: "saving",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What type of account is recommended for keeping an emergency fund?",
+        options: [
+          "A high-yield savings account",
+          "A money market account",
+          "A checking account",
+          "A CD account",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "A high-yield savings account is recommended for emergency funds.",
+      },
+      {
+        id: 2,
+        question: "What is the primary purpose of an emergency fund?",
+        options: [
+          "To earn high interest rates",
+          "To have a safety net for unexpected expenses",
+          "To invest in stocks and bonds",
+          "To donate to charity",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "The primary purpose is to have a safety net for unexpected expenses.",
+      },
+      {
+        id: 3,
+        question:
+          "What type of savings accounts is recommended by the speaker because they offer easy access to money and are not locked away like CD accounts or treasury bills?",
+        options: [
+          "High-yield savings accounts",
+          "Money market accounts",
+          "Certificates of Deposit (CD)",
+          "Treasury bills",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "High-yield savings accounts offer easy access and are not locked away.",
+      },
+      {
+        id: 4,
+        question:
+          "What is one advantage of keeping your emergency funds in a high-yield savings account?",
+        options: [
+          "Higher interest rates",
+          "Reduced temptation to spend on non-emergencies",
+          "Immediate access to funds",
+          "All of the above",
+        ],
+        correctAnswer: 1,
+        explanation: "Reduced temptation to spend is a key advantage.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 1005,
+    title: "Credit Scores & Credit Cards Quiz",
+    lessonTitle: "Credit Scores & Credit Cards",
+    category: "credit",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is the name of the company that generates the consumer credit score known as FICO?",
+        options: [
+          "Equifax",
+          "Experian",
+          "TransUnion",
+          "Fair Isaac Corporation",
+        ],
+        correctAnswer: 3,
+        explanation: "FICO stands for Fair Isaac Corporation.",
+      },
+      {
+        id: 2,
+        question:
+          "Which two credit scores are mentioned as being widely used in the industry?",
+        options: [
+          "FICO score and Vantage score",
+          "Equifax score and Experian score",
+          "TransUnion score and Credit Karma score",
+          "Bank of America score and Wells Fargo score",
+        ],
+        correctAnswer: 0,
+        explanation: "FICO and Vantage scores are widely used.",
+      },
+      {
+        id: 3,
+        question: "What are the two major credit reporting agencies?",
+        options: [
+          "Experian and Equifax",
+          "Equifax and Transunion",
+          "Experian and Transunion",
+          "Equifax and Transunion",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Equifax and Transunion are two major credit reporting agencies.",
+      },
+      {
+        id: 4,
+        question:
+          "What is the lowest credit score range for FICO and Vantage scores?",
+        options: ["350-400", "300-350", "250-300", "150-200"],
+        correctAnswer: 1,
+        explanation: "The lowest range for FICO and Vantage scores is 300-350.",
+      },
+      {
+        id: 5,
+        question:
+          "According to the transcript, what is the risk category for A lenders moving up from a fair credit score range?",
+        options: ["Low-risk", "Moderate-risk", "High-risk", "Unknown"],
+        correctAnswer: 1,
+        explanation:
+          "A lenders moving up from fair are considered moderate-risk.",
+      },
+      {
+        id: 6,
+        question:
+          "What does a credit score range of 670 to 739 indicate about the borrower's financial literacy?",
+        options: [
+          "High financial literacy",
+          "Average financial literacy",
+          "Below average financial literacy",
+          "Poor financial literacy",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "A score of 670 to 739 indicates average financial literacy.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 2006,
+    title: "Retirement Planning & Withdrawal Strategies Quiz",
+    lessonTitle: "Retirement Planning & Withdrawal Strategies",
+    category: "retirement",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question: "What is the main concern discussed regarding retirement?",
+        options: [
+          "Market crashes and inflation",
+          "Investment strategies",
+          "Savings and budgeting",
+          "Social security",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Market crashes and inflation are major concerns for retirees.",
+      },
+      {
+        id: 2,
+        question:
+          "What are some key rules or guidelines for retirement withdrawal strategies?",
+        options: [
+          "Investing in high-risk, high-return stocks",
+          "Diversifying investments across different asset classes",
+          "Withdrawing a fixed percentage of investments each year",
+          "Consistently contributing to retirement accounts",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Diversification is a key guideline for safe retirement withdrawals.",
+      },
+      {
+        id: 3,
+        question:
+          "What is not included in the safe withdrawal rate when applying a withdrawal strategy?",
+        options: [
+          "Tax implications",
+          "Inflation rates",
+          "Investment diversification",
+          "Personal financial goals",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Tax implications are often not included in the safe withdrawal rate.",
+      },
+      {
+        id: 4,
+        question: "What is the most popular withdrawal strategy mentioned?",
+        options: ["4% rule", "Trini", "Diversification", "Risk management"],
+        correctAnswer: 0,
+        explanation: "The 4% rule is a widely known withdrawal strategy.",
+      },
+      {
+        id: 5,
+        question:
+          "Which of the following is the most important point in a sound retirement plan?",
+        options: [
+          "Only using one withdrawal strategy",
+          "Using multiple withdrawal strategies",
+          "Investing in high-risk, high-return assets",
+          "Consistently saving a fixed amount of money each month",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Using multiple withdrawal strategies is important for a sound retirement plan.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 2007,
+    title: "Social Security & Pensions Quiz",
+    lessonTitle: "Social Security & Pensions",
+    category: "retirement",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is a simple step to take to better understand your pension provider?",
+        options: [
+          "Ignore your pension provider's website",
+          "Google the name of your pension provider",
+          "Ask a friend or family member for information",
+          "Visit a financial advisor",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Googling your pension provider is a simple way to learn more about them.",
+      },
+      {
+        id: 2,
+        question:
+          "What can you do to manage your pension more effectively according to the conversation with Laura Steel from Nest Pensions?",
+        options: [
+          "Increase your contributions to your pension",
+          "Review your pension documents regularly",
+          "Consult with a financial advisor",
+          "All of the above",
+        ],
+        correctAnswer: 3,
+        explanation:
+          "All of these actions help manage your pension more effectively.",
+      },
+      {
+        id: 3,
+        question:
+          "What is an important aspect of financial literacy for individuals with multiple jobs?",
+        options: [
+          "Creating a budget",
+          "Tracking down lost pots",
+          "Managing debt",
+          "Investing in stocks",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Tracking down lost pension pots is important for those with multiple jobs.",
+      },
+      {
+        id: 4,
+        question:
+          "What would happen if you passed away before you could take your pension?",
+        options: [
+          "The money would be distributed to your beneficiaries or charity of your choice",
+          "Your pension would be forfeited and cannot be claimed by anyone",
+          "Your pension would be taken by the government for their use",
+          "The money would be given to your estate",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "If you pass away, your pension can go to your beneficiaries or a charity.",
+      },
+      {
+        id: 5,
+        question:
+          "What is a good place to start looking for forgotten pension pots?",
+        options: [
+          "The money helper website",
+          "The pension provider's website",
+          "The government's financial assistance website",
+          "None of the above",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "The Money Helper website is a good resource for finding forgotten pension pots.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 2008,
+    title: "Smart Spending in Retirement Quiz",
+    lessonTitle: "Smart Spending in Retirement",
+    category: "budgeting",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is one way to stretch a tiny retirement income discussed in the video?",
+        options: [
+          "Investing in high-risk stocks",
+          "Cutting expenses and living below one's means",
+          "Increasing one's salary through a second job",
+          "Borrowing money from friends and family",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Cutting expenses and living below your means helps stretch a small retirement income.",
+      },
+      {
+        id: 2,
+        question:
+          "What is the first strategy mentioned for managing personal finances?",
+        options: [
+          "Create a detailed budget",
+          "Avoid tracking expenses",
+          "Increase income without managing expenses",
+          "Invest in high-risk investments",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Creating a detailed budget is the first strategy for managing finances.",
+      },
+      {
+        id: 3,
+        question:
+          "What is the first step suggested in the transcript to help improve financial literacy?",
+        options: [
+          "Ignoring your spending habits",
+          "Analyzing past expenses to identify patterns",
+          "Blaming external factors for financial issues",
+          "Making sudden, drastic changes in spending",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Analyzing past expenses helps identify spending patterns and improve financial literacy.",
+      },
+      {
+        id: 4,
+        question:
+          "What is one way to identify and potentially reduce unnecessary expenses in your budget?",
+        options: [
+          "Ignoring your bank account and credit card statements",
+          "Looking for one-off items and being honest with yourself about them",
+          "Blaming others for your financial situation",
+          "Cutting all discretionary spending",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Looking for one-off items and being honest helps reduce unnecessary expenses.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 2009,
+    title: "Avoiding Scams & Financial Fraud Quiz",
+    lessonTitle: "Avoiding Scams & Financial Fraud",
+    category: "basics",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What is one of the tactics used by scammers to keep you isolated?",
+        options: [
+          "Providing financial education resources",
+          "Encouraging you to talk to your brother about the situation",
+          "Offering to help you with your financial problems",
+          "Isolating you from your friends and family",
+        ],
+        correctAnswer: 3,
+        explanation:
+          "Scammers often try to isolate victims from friends and family.",
+      },
+      {
+        id: 2,
+        question:
+          "What is the primary goal of scams when targeting individuals?",
+        options: [
+          "To make rational decisions",
+          "To appeal to the individual's emotions",
+          "To educate the public on financial literacy",
+          "To create long-term investments",
+        ],
+        correctAnswer: 1,
+        explanation: "Scams often appeal to emotions to manipulate victims.",
+      },
+      {
+        id: 3,
+        question:
+          "What is the most common type of fraud mentioned in the transcript?",
+        options: [
+          "Credit card fraud",
+          "Gift card fraud",
+          "Payment method fraud",
+          "Savings fraud",
+        ],
+        correctAnswer: 1,
+        explanation: "Gift card fraud is a common type of scam.",
+      },
+      {
+        id: 4,
+        question:
+          "What are some signs of financial fraud or scams to be aware of?",
+        options: [
+          "Slowing down phone calls",
+          "Requesting money through Bitcoin or gift cards",
+          "Ignoring phone calls from unknown people",
+          "All of the above",
+        ],
+        correctAnswer: 3,
+        explanation: "All of these can be signs of financial fraud or scams.",
+      },
+    ],
+    comingSoon: false,
+  },
+  {
+    id: 2010,
+    title: "Healthcare and Long-Term Financial Planning Quiz",
+    lessonTitle: "Healthcare and Long-Term Financial Planning",
+    category: "retirement",
+    completed: false,
+    score: null,
+    questions: [
+      {
+        id: 1,
+        question:
+          "What does Medicare usually cover for nursing home care, in-home care, or assisted living?",
+        options: [
+          "All expenses",
+          "Short-term care only",
+          "Long-term care only",
+          "Partial expenses",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Medicare usually covers only short-term care for these services.",
+      },
+      {
+        id: 2,
+        question: "What does long-term care insurance typically not cover?",
+        options: [
+          "Short-term nursing home stays",
+          "Long-term nursing home stays",
+          "Chronic illnesses",
+          "All of the above",
+        ],
+        correctAnswer: 0,
+        explanation:
+          "Long-term care insurance typically does not cover short-term nursing home stays.",
+      },
+      {
+        id: 3,
+        question: "What is the primary role of long-term care insurance?",
+        options: [
+          "To cover short-term medical costs",
+          "To cover long-term care costs that Medicare doesn't cover",
+          "To provide retirement income",
+          "To pay for medical expenses incurred during travel",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Long-term care insurance is designed to cover costs that Medicare does not.",
+      },
+      {
+        id: 4,
+        question:
+          "What can help lower the cost of long-term care insurance premiums?",
+        options: [
+          "Buying long-term care insurance at an older age",
+          "Buying long-term care insurance as early as possible",
+          "Choosing a higher monthly premium",
+          "Waiting until retirement to buy long-term care insurance",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Buying long-term care insurance early can help lower premiums.",
+      },
+    ],
+    comingSoon: false,
+  },
 ];
 
 const QuizPage = () => {
@@ -966,18 +2145,21 @@ const QuizPage = () => {
   });
 
   // Sort completed quizzes to show most recently completed first
-  const completedQuizzesFromList = quizList.filter(q => 
-    q.completed && lessons.some(lesson => lesson.title === q.lessonTitle)
+  const completedQuizzesFromList = quizList.filter(
+    (q) =>
+      q.completed && lessons.some((lesson) => lesson.title === q.lessonTitle)
   );
-  const incompleteQuizzesFromList = quizList.filter(q => 
-    !q.completed && lessons.some(lesson => lesson.title === q.lessonTitle)
+  const incompleteQuizzesFromList = quizList.filter(
+    (q) =>
+      !q.completed && lessons.some((lesson) => lesson.title === q.lessonTitle)
   );
-  
+
   // Combine: completed quizzes (in order from quizList) + incomplete quizzes (in lesson order)
   const completedQuizzes = completedQuizzesFromList;
-  const incompleteQuizzes = incompleteQuizzesFromList.length > 0 
-    ? incompleteQuizzesFromList 
-    : quizzesForAgeGroup.filter((q) => !q.completed);
+  const incompleteQuizzes =
+    incompleteQuizzesFromList.length > 0
+      ? incompleteQuizzesFromList
+      : quizzesForAgeGroup.filter((q) => !q.completed);
 
   const startQuiz = (quiz: any) => {
     setSelectedQuiz(quiz);
@@ -1002,19 +2184,21 @@ const QuizPage = () => {
       const score = calculateScore();
       setQuizList((prev) => {
         const updatedList = prev.map((q) =>
-          q.id === selectedQuiz.id 
-            ? { 
-                ...q, 
-                completed: true, 
-                score: q.score ? Math.max(q.score, score) : score // Keep the highest score
-              } 
+          q.id === selectedQuiz.id
+            ? {
+                ...q,
+                completed: true,
+                score: q.score ? Math.max(q.score, score) : score, // Keep the highest score
+              }
             : q
         );
         // Move the retaken quiz to the front of the completed list
-        const retakenQuiz = updatedList.find(q => q.id === selectedQuiz.id);
+        const retakenQuiz = updatedList.find((q) => q.id === selectedQuiz.id);
         if (retakenQuiz && retakenQuiz.completed) {
           // Remove from current position and add to front
-          const filteredList = updatedList.filter(q => q.id !== selectedQuiz.id);
+          const filteredList = updatedList.filter(
+            (q) => q.id !== selectedQuiz.id
+          );
           return [retakenQuiz, ...filteredList];
         }
         return updatedList;
@@ -1205,7 +2389,8 @@ const QuizPage = () => {
             Knowledge Quizzes
           </h1>
           <p className="text-xl text-muted-foreground">
-            Test what you've learned from {formatAgeGroupLabel(userProfile.currentAgeGroup)} Lessons
+            Test what you've learned from{" "}
+            {formatAgeGroupLabel(userProfile.currentAgeGroup)} Lessons
           </p>
         </div>
 
@@ -1218,7 +2403,7 @@ const QuizPage = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {incompleteQuizzes.map((quiz, index) => {
-              const lesson = lessons.find(l => l.title === quiz.lessonTitle);
+              const lesson = lessons.find((l) => l.title === quiz.lessonTitle);
               let isCompleted = false;
               if (lesson) {
                 const videoProgress = getLessonVideoProgress(
@@ -1226,19 +2411,26 @@ const QuizPage = () => {
                   lesson.id,
                   lesson.videos?.length || 0
                 );
-                isCompleted = videoProgress.completed === videoProgress.total && videoProgress.total > 0;
+                isCompleted =
+                  videoProgress.completed === videoProgress.total &&
+                  videoProgress.total > 0;
               }
               const comingSoon = !isCompleted;
 
               return (
                 <Card
                   key={quiz.id}
-                  className={`card-interactive animate-fade-in h-full flex flex-col ${comingSoon ? "opacity-60" : ""}`}
+                  className={`card-interactive animate-fade-in h-full flex flex-col ${
+                    comingSoon ? "opacity-60" : ""
+                  }`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="p-6 flex flex-col h-full">
                     <div className="flex items-start justify-between mb-4">
-                      <Badge variant="default" className="bg-primary text-white">
+                      <Badge
+                        variant="default"
+                        className="bg-primary text-white"
+                      >
                         To Do
                       </Badge>
                       <div className="text-right">
