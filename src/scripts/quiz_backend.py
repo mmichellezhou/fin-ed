@@ -14,6 +14,7 @@ class TranscriptRequest(BaseModel):
     transcript: str
 
 def generate_quiz_with_localai(transcript):
+    print(f"Generating quiz for transcript length: {len(transcript)}")
     url = "http://localhost:8080/v1/chat/completions"
     headers = {"Content-Type": "application/json"}
     data = {
@@ -29,14 +30,20 @@ def generate_quiz_with_localai(transcript):
         ],
         "max_tokens": 4000
     }
+    print(f"Sending request to LocalAI with data: {data}")
     response = requests.post(url, headers=headers, json=data)
+    print(f"LocalAI response status: {response.status_code}")
+    print(f"LocalAI response: {response.text}")
     response.raise_for_status()
     return response.json()["choices"][0]["message"]["content"]
 
 @app.post("/generate-quiz")
 def generate_quiz(req: TranscriptRequest):
     try:
+        print(f"Received request with transcript length: {len(req.transcript)}")
         quiz = generate_quiz_with_localai(req.transcript)
+        print(f"Generated quiz: {quiz}")
         return {"quiz": quiz}
     except Exception as e:
+        print(f"Error in generate_quiz: {e}")
         raise HTTPException(status_code=500, detail=str(e)) 
