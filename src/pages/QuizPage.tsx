@@ -2226,6 +2226,49 @@ const QuizPage = () => {
     setShowResults(false);
   };
 
+  useEffect(() => {
+    // Find the first unlocked quiz (not completed, but now available)
+    const unlockedQuiz = incompleteQuizzes.find((quiz) => {
+      const lesson = lessons.find(l => l.title === quiz.lessonTitle);
+      if (!lesson) return false;
+      const videoProgress = getLessonVideoProgress(
+        currentAgeGroup,
+        lesson.id,
+        lesson.videos?.length || 0
+      );
+      return videoProgress.completed === videoProgress.total && videoProgress.total > 0;
+    });
+
+    if (unlockedQuiz && quizList[0]?.id !== unlockedQuiz.id) {
+      setQuizList((prev) => {
+        const filtered = prev.filter(q => q.id !== unlockedQuiz.id);
+        return [unlockedQuiz, ...filtered];
+      });
+    }
+    // eslint-disable-next-line
+  }, [incompleteQuizzes, lessons, currentAgeGroup]);
+
+  useEffect(() => {
+    // Find all quizzes whose lessons are completed
+    const completedLessonQuizzes = quizList.filter((quiz) => {
+      const lesson = lessons.find(l => l.title === quiz.lessonTitle);
+      if (!lesson) return false;
+      const videoProgress = getLessonVideoProgress(
+        currentAgeGroup,
+        lesson.id,
+        lesson.videos?.length || 0
+      );
+      return videoProgress.completed === videoProgress.total && videoProgress.total > 0;
+    });
+    if (completedLessonQuizzes.length > 0) {
+      setQuizList((prev) => {
+        const filteredList = prev.filter(q => !completedLessonQuizzes.some(cq => cq.id === q.id));
+        return [...completedLessonQuizzes, ...filteredList];
+      });
+    }
+    // eslint-disable-next-line
+  }, [lessons, quizList, currentAgeGroup]);
+
   if (selectedQuiz && quizStarted) {
     const currentQ = selectedQuiz.questions[currentQuestion];
     const progress =
